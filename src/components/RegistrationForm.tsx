@@ -7,7 +7,6 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import type { CommunityArchetype, EventTicketRecord } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
-import { ArchetypeSelector } from "@/components/ArchetypeSelector";
 import { PromoCodeInput } from "@/components/PromoCodeInput";
 
 const registrationSchema = z.object({
@@ -126,18 +125,38 @@ export function RegistrationForm({ eventId, eventSlug, ticket }: RegistrationFor
         </div>
       </div>
 
+      {/* Order Information */}
+      <div className="rounded-lg border border-pine/10 bg-white p-5">
+        <h3 className="mb-4 font-display text-base text-pine">Order Information</h3>
+        <div className="space-y-4">
+          <Field label="Fullname *" error={errors.full_name?.message}>
+            <input {...register("full_name")} className={inputClass} placeholder="Juan Dela Cruz" />
+          </Field>
+          <Field label="Email *" error={errors.email?.message}>
+            <input {...register("email")} type="email" className={inputClass} placeholder="you@example.com" />
+          </Field>
+          <Field label="Phone number *" error={errors.mobile_number?.message}>
+            <input {...register("mobile_number")} className={inputClass} placeholder="+63 9XX XXX XXXX" />
+          </Field>
+          <Field label="Please comment: Founder, Creative, Community Builder, or Enabler" error={undefined}>
+            <select
+              className={inputClass}
+              value={archetype ?? ""}
+              onChange={(e) => setArchetype((e.target.value as CommunityArchetype) || null)}
+            >
+              <option value="">Select your role…</option>
+              <option value="founder">Founder</option>
+              <option value="creative">Creative</option>
+              <option value="community_builder">Community Builder</option>
+              <option value="enabler">Enabler</option>
+            </select>
+          </Field>
+        </div>
+      </div>
+
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Full Name *" error={errors.full_name?.message}>
-          <input {...register("full_name")} className={inputClass} placeholder="Juan Dela Cruz" />
-        </Field>
         <Field label="Business / Organization" error={errors.business_name?.message}>
           <input {...register("business_name")} className={inputClass} placeholder="Optional" />
-        </Field>
-        <Field label="Email Address *" error={errors.email?.message}>
-          <input {...register("email")} type="email" className={inputClass} placeholder="you@example.com" />
-        </Field>
-        <Field label="Mobile Number *" error={errors.mobile_number?.message}>
-          <input {...register("mobile_number")} className={inputClass} placeholder="+63 9XX XXX XXXX" />
         </Field>
         <Field label="Industry" error={errors.industry?.message}>
           <select {...register("industry")} className={inputClass}>
@@ -153,8 +172,6 @@ export function RegistrationForm({ eventId, eventSlug, ticket }: RegistrationFor
           <input {...register("social_link")} className={inputClass} placeholder="https://instagram.com/yourhandle" />
         </Field>
       </div>
-
-      <ArchetypeSelector value={archetype} onChange={setArchetype} />
 
       {ticket.price > 0 && (
         <PromoCodeInput
