@@ -1,12 +1,6 @@
 import Link from "next/link";
 
-const NAV_LINKS = [
-  { href: "/#home", label: "Home" },
-  { href: "/#community", label: "Community" },
-  { href: "/#emagazine", label: "eMagazine" },
-  { href: "/#sme-directory", label: "SME Directory" },
-  { href: "/#events", label: "Events" },
-];
+const AYA_URL = "https://www.destinevents.biz/asyouarebaguio";
 
 export function Navbar() {
   return (
@@ -16,17 +10,30 @@ export function Navbar() {
           <em className="italic text-gold-light">As You Are</em> Baguio
         </Link>
         <div className="ml-auto hidden items-center gap-8 md:flex">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-fog/60 transition-colors hover:text-fog"
-            >
-              {link.label}
-            </Link>
-          ))}
           <Link
-            href="/events#upcoming"
+            href="/"
+            className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-fog/60 transition-colors hover:text-fog"
+          >
+            Events
+          </Link>
+          <a
+            href={AYA_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-fog/60 transition-colors hover:text-fog"
+          >
+            Community
+          </a>
+          <a
+            href={AYA_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-fog/60 transition-colors hover:text-fog"
+          >
+            eMagazine
+          </a>
+          <Link
+            href="/events"
             className="rounded-sm bg-gold px-6 py-2 font-mono text-[0.65rem] font-medium uppercase tracking-[0.14em] text-pine-deep transition-colors hover:bg-gold-light"
           >
             Get Tickets
