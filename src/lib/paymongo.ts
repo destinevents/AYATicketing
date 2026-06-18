@@ -45,7 +45,7 @@ export async function createCheckoutSession({
               quantity: 1,
             },
           ],
-          payment_method_types: ["card", "gcash", "maya", "billease", "grab_pay"],
+          payment_method_types: ["card", "gcash"],
           success_url: successUrl,
           cancel_url: cancelUrl,
           metadata: { registration_id: registrationId },
