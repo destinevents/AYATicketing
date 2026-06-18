@@ -5,6 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { generateQrDataUrl } from "@/lib/qrcode";
 import { formatCurrency, formatDate, formatTime } from "@/lib/utils";
+import { PayNowButton } from "@/components/PayNowButton";
 
 interface ConfirmationPageProps {
   params: Promise<{ id: string }>;
@@ -28,8 +29,6 @@ export default async function ConfirmationPage({ params }: ConfirmationPageProps
 
   const isPaid = payment?.status === "paid";
   const isFree = Number(ticket?.price ?? 0) === 0;
-
-  const paymongoLink = process.env.NEXT_PUBLIC_PAYMONGO_PAYMENT_LINK || null;
 
   const qrDataUrl = registration.qr_code ? await generateQrDataUrl(registration.qr_code) : null;
 
@@ -107,16 +106,7 @@ export default async function ConfirmationPage({ params }: ConfirmationPageProps
                 via our PayMongo checkout (card, GCash, Maya, or bank transfer all accepted there):
               </p>
 
-              {paymongoLink && (
-                <a
-                  href={paymongoLink}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mb-4 block w-full rounded-sm bg-gold px-6 py-3.5 text-center font-mono text-[0.65rem] uppercase tracking-[0.18em] text-pine-deep transition-colors hover:bg-gold-light"
-                >
-                  Pay Now via PayMongo →
-                </a>
-              )}
+              <PayNowButton registrationId={registration.id} />
 
               <details className="group">
                 <summary className="cursor-pointer list-none font-mono text-[0.6rem] uppercase tracking-[0.12em] text-terra">
