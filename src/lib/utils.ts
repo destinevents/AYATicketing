@@ -16,12 +16,15 @@ export function formatCurrency(amount: number): string {
   }).format(amount);
 }
 
+const PH_TZ = "Asia/Manila";
+
 export function formatDate(date: string | Date, opts?: Intl.DateTimeFormatOptions): string {
   const d = typeof date === "string" ? new Date(date) : date;
   return new Intl.DateTimeFormat("en-PH", {
     year: "numeric",
     month: "long",
     day: "numeric",
+    timeZone: PH_TZ,
     ...opts,
   }).format(d);
 }
@@ -31,6 +34,7 @@ export function formatDateShort(date: string | Date): string {
   return new Intl.DateTimeFormat("en-PH", {
     month: "short",
     day: "numeric",
+    timeZone: PH_TZ,
   }).format(d);
 }
 
@@ -40,17 +44,18 @@ export function formatTime(date: string | Date): string {
     hour: "numeric",
     minute: "2-digit",
     hour12: true,
+    timeZone: PH_TZ,
   }).format(d);
 }
 
 export function getMonthAbbrev(date: string | Date): string {
   const d = typeof date === "string" ? new Date(date) : date;
-  return new Intl.DateTimeFormat("en-PH", { month: "short" }).format(d).toUpperCase();
+  return new Intl.DateTimeFormat("en-PH", { month: "short", timeZone: PH_TZ }).format(d).toUpperCase();
 }
 
 export function getDay(date: string | Date): string {
   const d = typeof date === "string" ? new Date(date) : date;
-  return new Intl.DateTimeFormat("en-PH", { day: "numeric" }).format(d);
+  return new Intl.DateTimeFormat("en-PH", { day: "numeric", timeZone: PH_TZ }).format(d);
 }
 
 // ── Ticket availability ──
