@@ -66,6 +66,11 @@ export function EventCard({ event, tickets = [] }: EventCardProps) {
             </span>
           )}
         </div>
+        <div className="mt-4">
+          <span className="block w-full rounded-sm bg-gold py-2.5 text-center font-mono text-[0.6rem] uppercase tracking-[0.16em] text-pine-deep transition-colors group-hover:bg-gold-light">
+            Register Now →
+          </span>
+        </div>
       </div>
     </Link>
   );

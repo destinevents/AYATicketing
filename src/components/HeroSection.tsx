@@ -68,6 +68,20 @@ export function HeroSection() {
                 Explore Creators
               </a>
             </div>
+            {/* June 20 event CTA */}
+            <div className="mt-8 flex items-center gap-4 rounded-md border border-gold/20 bg-white/[0.04] px-6 py-4">
+              <div className="flex-shrink-0 text-center">
+                <div className="font-display text-2xl leading-none text-gold-light">20</div>
+                <div className="font-mono text-[0.5rem] uppercase tracking-[0.14em] text-gold/70">Jun</div>
+              </div>
+              <div className="flex-1">
+                <div className="text-[0.82rem] font-medium leading-tight text-fog">AYA Builder&apos;s Circle — June Session</div>
+                <div className="mt-0.5 font-mono text-[0.62rem] text-fog/50">3:30 PM – 5:00 PM · El Cielito Hotel Baguio</div>
+              </div>
+              <a href="#events" className="flex-shrink-0 rounded-sm bg-gold px-5 py-2.5 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-pine-deep transition-colors hover:bg-gold-light">
+                Register →
+              </a>
+            </div>
           </div>
 
           {/* Right: stat card */}
