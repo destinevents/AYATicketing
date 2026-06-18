@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
 import { generateQrToken } from "@/lib/utils";
 import { sendRegistrationConfirmationEmail } from "@/lib/email/send";
-import { createCheckoutSession } from "@/lib/paymongo";
 import { z } from "zod";
 
 const bodySchema = z.object({
@@ -101,28 +100,10 @@ export async function POST(request: Request) {
     // 5. Fetch event (needed for checkout title + confirmation email)
     const { data: event } = await supabase.from("events").select("*").eq("id", body.event_id).single();
 
-    // 6. For paid tickets, create a PayMongo checkout session so the user
-    //    is redirected to a hosted checkout instead of manually paying.
+    // 6. For paid tickets, redirect to the static PayMongo payment link.
     let checkoutUrl: string | null = null;
     if (!isFree && !isFreeAfterDiscount) {
-      try {
-        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-        const session = await createCheckoutSession({
-          registrationId: registration.id,
-          amountPhp: finalAmount,
-          ticketName: ticket.name,
-          eventTitle: event?.title ?? "AYA Event",
-          email: body.email,
-          name: body.full_name,
-          phone: body.mobile_number,
-          successUrl: `${siteUrl}/events/confirmation/${registration.id}?payment=success`,
-          cancelUrl: `${siteUrl}/events/confirmation/${registration.id}?payment=cancelled`,
-        });
-        checkoutUrl = session.checkoutUrl;
-      } catch (err) {
-        console.error("[PayMongo] checkout session failed:", err);
-        // Non-fatal — falls back to manual payment flow on confirmation page
-      }
+      checkoutUrl = "https://paymongo.page/l/ayafounderscreatives";
     }
 
     // 7. Send registration confirmation email
