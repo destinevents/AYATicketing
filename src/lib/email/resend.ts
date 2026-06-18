@@ -13,4 +13,4 @@ export function getResendClient(): Resend | null {
   return _resend;
 }
 
-export const EMAIL_FROM = process.env.EMAIL_FROM || "AYA Community <jenncastro@destinevents.biz>";
+export const EMAIL_FROM = process.env.EMAIL_FROM || "As You Are Baguio <hello@disenyodigitals.com>";
