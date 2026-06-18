@@ -1,0 +1,175 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
+import type { CommunityArchetype, PaymentStatus, RegistrationStatus } from "@/lib/types";
+import { ARCHETYPE_META } from "@/lib/types";
+import { formatCurrency, formatDate } from "@/lib/utils";
+
+interface RegistrationRow {
+  id: string;
+  full_name: string;
+  email: string;
+  mobile_number: string;
+  business_name: string | null;
+  status: RegistrationStatus;
+  checked_in: boolean;
+  created_at: string;
+  archetype: CommunityArchetype | null;
+  event_tickets: { name: string; price: number } | null;
+  payments: { id: string; amount: number; method: string; status: PaymentStatus }[];
+}
+
+const PAYMENT_STATUSES: PaymentStatus[] = ["pending", "paid", "cancelled", "refunded"];
+const REG_STATUSES: RegistrationStatus[] = ["pending", "confirmed", "cancelled", "waitlisted"];
+
+export function RegistrationsTable({ registrations }: { registrations: RegistrationRow[] }) {
+  return (
+    <div className="overflow-hidden rounded-xl border border-pine/10 bg-white">
+      <table className="w-full text-sm">
+        <thead>
+          <tr className="border-b border-pine/10 bg-pine/[0.02] text-left font-mono text-[0.58rem] uppercase tracking-[0.1em] text-muted">
+            <th className="px-5 py-3">Attendee</th>
+            <th className="px-5 py-3">Archetype</th>
+            <th className="px-5 py-3">Ticket</th>
+            <th className="px-5 py-3">Registration</th>
+            <th className="px-5 py-3">Payment</th>
+            <th className="px-5 py-3">Check-In</th>
+            <th className="px-5 py-3">Registered</th>
+          </tr>
+        </thead>
+        <tbody>
+          {registrations.map((r) => (
+            <RegistrationRowItem key={r.id} reg={r} />
+          ))}
+        </tbody>
+      </table>
+      {registrations.length === 0 && (
+        <div className="py-12 text-center text-sm text-muted">No registrations yet for this event.</div>
+      )}
+    </div>
+  );
+}
+
+function RegistrationRowItem({ reg }: { reg: RegistrationRow }) {
+  const router = useRouter();
+  const [updating, setUpdating] = useState(false);
+  const payment = reg.payments?.[0];
+
+  async function updateRegStatus(status: RegistrationStatus) {
+    setUpdating(true);
+    const supabase = createClient();
+    await supabase.from("registrations").update({ status }).eq("id", reg.id);
+    setUpdating(false);
+    router.refresh();
+  }
+
+  async function updatePaymentStatus(status: PaymentStatus) {
+    if (!payment) return;
+    setUpdating(true);
+    try {
+      const res = await fetch("/api/payments", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ payment_id: payment.id, status }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        alert(data?.error ?? "Could not update payment status.");
+      }
+    } catch {
+      alert("Could not update payment status.");
+    }
+    setUpdating(false);
+    router.refresh();
+  }
+
+  async function toggleCheckIn() {
+    setUpdating(true);
+    const supabase = createClient();
+    await supabase
+      .from("registrations")
+      .update({
+        checked_in: !reg.checked_in,
+        checked_in_at: !reg.checked_in ? new Date().toISOString() : null,
+      })
+      .eq("id", reg.id);
+    setUpdating(false);
+    router.refresh();
+  }
+
+  return (
+    <tr className="border-b border-pine/5 last:border-0">
+      <td className="px-5 py-3">
+        <div className="font-display text-pine">{reg.full_name}</div>
+        <div className="text-xs text-muted">{reg.email}</div>
+        <div className="text-xs text-muted">{reg.mobile_number}</div>
+        {reg.business_name && <div className="text-xs text-muted">{reg.business_name}</div>}
+      </td>
+      <td className="px-5 py-3">
+        {reg.archetype ? (
+          <span
+            className="rounded-full bg-gold/10 px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-[0.08em] text-terra"
+            title={ARCHETYPE_META[reg.archetype].tagline}
+          >
+            {ARCHETYPE_META[reg.archetype].emoji} {ARCHETYPE_META[reg.archetype].code}
+          </span>
+        ) : (
+          <span className="text-muted">—</span>
+        )}
+      </td>
+      <td className="px-5 py-3 text-muted">
+        {reg.event_tickets?.name ?? "—"}
+        <div className="font-mono text-xs">{formatCurrency(reg.event_tickets?.price ?? 0)}</div>
+      </td>
+      <td className="px-5 py-3">
+        <select
+          value={reg.status}
+          disabled={updating}
+          onChange={(e) => updateRegStatus(e.target.value as RegistrationStatus)}
+          className="rounded-full border border-pine/10 bg-white px-2 py-1 font-mono text-[0.6rem] uppercase tracking-[0.08em] text-pine outline-none"
+        >
+          {REG_STATUSES.map((s) => (
+            <option key={s} value={s}>{s}</option>
+          ))}
+        </select>
+      </td>
+      <td className="px-5 py-3">
+        {payment ? (
+          <select
+            value={payment.status}
+            disabled={updating}
+            onChange={(e) => updatePaymentStatus(e.target.value as PaymentStatus)}
+            className={`rounded-full border px-2 py-1 font-mono text-[0.6rem] uppercase tracking-[0.08em] outline-none ${
+              payment.status === "paid"
+                ? "border-moss/30 bg-moss/10 text-moss"
+                : payment.status === "pending"
+                ? "border-gold/30 bg-gold/10 text-terra"
+                : "border-terra/20 bg-terra/5 text-terra"
+            }`}
+          >
+            {PAYMENT_STATUSES.map((s) => (
+              <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
+        ) : (
+          <span className="text-muted">—</span>
+        )}
+        {payment && <div className="mt-1 font-mono text-xs text-muted">{payment.method}</div>}
+      </td>
+      <td className="px-5 py-3">
+        <button
+          onClick={toggleCheckIn}
+          disabled={updating}
+          className={`rounded-full px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-[0.08em] transition-colors ${
+            reg.checked_in ? "bg-moss/15 text-moss" : "bg-pine/5 text-muted hover:text-pine"
+          }`}
+        >
+          {reg.checked_in ? "✓ Checked In" : "Not yet"}
+        </button>
+      </td>
+      <td className="px-5 py-3 text-xs text-muted">{formatDate(reg.created_at, { month: "short", day: "numeric", year: "numeric" })}</td>
+    </tr>
+  );
+}

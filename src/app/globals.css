@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-pine: #2b3228;
+  --color-pine-deep: #1d2219;
+  --color-fog: #f0ede6;
+  --color-gold: #c9a84c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-fog);
+  color: var(--color-ink, #1a1e18);
+}
+
+/* ── Reveal-on-scroll utility (used across event pages) ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Scrollbar styling (subtle, brand-aligned) ── */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-fog);
+}
+::-webkit-scrollbar-thumb {
+  background: #c9c2b2;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold);
+}
