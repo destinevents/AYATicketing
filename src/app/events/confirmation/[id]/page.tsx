@@ -28,9 +28,9 @@ export default async function ConfirmationPage({ params, searchParams }: Confirm
 
   const event = registration.events;
   const ticket = registration.event_tickets;
-  const payment = registration.payments?.[0];
+  const paymentRecord = registration.payments?.[0];
 
-  const isPaid = payment?.status === "paid";
+  const isPaid = paymentRecord?.status === "paid";
   const isFree = Number(ticket?.price ?? 0) === 0;
 
   const qrDataUrl = registration.qr_code ? await generateQrDataUrl(registration.qr_code) : null;
@@ -115,7 +115,7 @@ export default async function ConfirmationPage({ params, searchParams }: Confirm
             <div className="mb-6 rounded-xl border border-gold/30 bg-gold/5 p-5">
               <h3 className="mb-2 font-display text-lg text-pine">Complete Your Payment</h3>
               <p className="mb-4 text-sm text-ink/80">
-                Pay <strong>{formatCurrency(registration.final_amount ?? payment?.amount ?? 0)}</strong> to confirm your slot. The fastest way is
+                Pay <strong>{formatCurrency(registration.final_amount ?? paymentRecord?.amount ?? 0)}</strong> to confirm your slot. The fastest way is
                 via our PayMongo checkout (card, GCash, Maya, or bank transfer all accepted there):
               </p>
 

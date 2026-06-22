@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethan Creative Studio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&family=Inter:wght@900&display=swap');
+
+        /* --- Color Palette & Variables --- */
+        :root {
+            --bg-main: #161513;
+            --text-muted: #8b8882;
+            --text-light: #ffffff;
+            --accent-color: #f7bb62;
+            --border-dark: #2a2825;
+            --font-mono: 'Courier Prime', monospace;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        /* --- Global Resets --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .highlight {
+            color: var(--accent-color);
+        }
+
+        /* --- Header Styles --- */
+        header {
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        .top-banner {
+            text-align: center;
+            padding: 1.2rem;
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border-dark);
+            line-height: 1.8;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2.5rem;
+        }
+
+        .logo {
+            font-family: var(--font-sans);
+            font-size: 2.2rem;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-dot {
+            color: var(--accent-color);
+        }
+
+        .cta-btn {
+            background-color: var(--accent-color);
+            color: #000000;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-family: var(--font-mono);
+            font-weight: bold;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+            display: inline-block;
+        }
+
+        .cta-btn:hover {
+            opacity: 0.85;
+        }
+
+        /* --- Main Content Area --- */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* --- Fallback Notice Styles --- */
+        .fallback-notice {
+            text-align: center;
+            padding: 2rem 1rem;
+            width: 100%;
+            background-color: #1a1816;
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        .fallback-notice p {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        /* --- Portfolio Embed Styles --- */
+        .portfolio-frame {
+            flex: 1;
+            width: 100%;
+            min-height: 80vh;
+            border: none;
+        }
+
+        /* --- Footer Styles --- */
+        footer {
+            padding: 1.5rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-dark);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+            
+            footer {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem;
+            }
+            
+            .top-banner {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="top-banner">
+            Featured creator under <span class="highlight">As You Are Baguio</span> — a 600+ member network of<br>
+            Baguio builders, creatives & changemakers
+        </div>
+        <div class="nav-container">
+            <a href="#" class="logo">ETHAN<span class="logo-dot">.</span></a>
+            <a href="#" class="cta-btn">Work with Ethan &rarr;</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Fallback section in case the iframe is blocked by browser settings -->
+        <div class="fallback-notice">
+            <p>If the embedded portfolio does not load below, please view it directly:</p>
+            <a href="https://www.figma.com/site/MpYH1DvwCPeMjgJQ4LpQuz/My-Portfolio?node-id=0-1&t=gEXD3RRLQasH7dYL-1" target="_blank" class="cta-btn">Open Portfolio in New Tab</a>
+        </div>
+
+        <!-- The iframe using Ethan's Figma link -->
+        <iframe src="https://www.figma.com/site/MpYH1DvwCPeMjgJQ4LpQuz/My-Portfolio?node-id=0-1&t=gEXD3RRLQasH7dYL-1" class="portfolio-frame" title="Ethan Portfolio" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
+    </main>
+
+    <footer>
+        <div>ETHAN Creative Studio · Portfolio</div>
+        <div>
+            Featured by <span class="highlight">As You Are Baguio</span> · Co-hosted by Destine Events · Website powered by <span class="highlight">Disenyo Digitals</span>
+        </div>
+    </footer>
+
+</body>
+</html>

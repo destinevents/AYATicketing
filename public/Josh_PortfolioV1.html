@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Josh Creative Studio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&family=Inter:wght@900&display=swap');
+
+        /* --- Color Palette & Variables --- */
+        :root {
+            --bg-main: #161513;
+            --text-muted: #8b8882;
+            --text-light: #ffffff;
+            --accent-color: #f7bb62;
+            --border-dark: #2a2825;
+            --font-mono: 'Courier Prime', monospace;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        /* --- Global Resets --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .highlight {
+            color: var(--accent-color);
+        }
+
+        /* --- Header Styles --- */
+        header {
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        .top-banner {
+            text-align: center;
+            padding: 1.2rem;
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border-dark);
+            line-height: 1.8;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2.5rem;
+        }
+
+        .logo {
+            font-family: var(--font-sans);
+            font-size: 2.2rem;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-dot {
+            color: var(--accent-color);
+        }
+
+        .cta-btn {
+            background-color: var(--accent-color);
+            color: #000000;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-family: var(--font-mono);
+            font-weight: bold;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+            display: inline-block;
+        }
+
+        .cta-btn:hover {
+            opacity: 0.85;
+        }
+
+        /* --- Main Content Area --- */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            background-color: #000000; 
+        }
+
+        /* --- Fallback Notice Styles --- */
+        .fallback-notice {
+            text-align: center;
+            padding: 2rem 1rem;
+            width: 100%;
+            background-color: #1a1816;
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        .fallback-notice p {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        /* --- Portfolio Image Carousel Styles --- */
+        .portfolio-image-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px; /* Constrained slightly for better resume readability */
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            background-color: #fff; /* Ensures transparent parts of the resume have a white background */
+        }
+
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--accent-color);
+            color: #000000;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0.8;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+
+        .nav-arrow:hover {
+            opacity: 1;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev-arrow {
+            left: 20px;
+        }
+
+        .next-arrow {
+            right: 20px;
+        }
+
+        .page-indicator {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        /* --- Footer Styles --- */
+        footer {
+            padding: 1.5rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-dark);
+            flex-wrap: wrap;
+            gap: 1rem;
+            background-color: var(--bg-main);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+            
+            footer {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem;
+            }
+            
+            .top-banner {
+                padding: 1rem;
+            }
+            
+            .portfolio-image-container {
+                padding: 1rem 0;
+            }
+            
+            .portfolio-image {
+                border-radius: 0;
+            }
+
+            .nav-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .prev-arrow {
+                left: 10px;
+            }
+
+            .next-arrow {
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="top-banner">
+            Featured creator under <span class="highlight">As You Are Baguio</span> — a 600+ member network of<br>
+            Baguio builders, creatives & changemakers
+        </div>
+        <div class="nav-container">
+            <a href="#" class="logo">JOSH<span class="logo-dot">.</span></a>
+            <a href="#" class="cta-btn">Work with Josh &rarr;</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Fallback section -->
+        <div class="fallback-notice">
+            <p>If the portfolio image does not load below, please view the pages directly:</p>
+            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                <a href="3fb6a4cb-d0b1-40f8-ab5d-53bc14c33d36.jpg" target="_blank" class="cta-btn" style="padding: 0.5rem 1rem; font-size: 0.85rem;">View Page 1</a>
+                <a href="2dbd93c5-d5cf-44a4-aba4-fbd1c035ea52.jpg" target="_blank" class="cta-btn" style="padding: 0.5rem 1rem; font-size: 0.85rem;">View Page 2</a>
+            </div>
+        </div>
+
+        <!-- The Image Carousel Embed -->
+        <div class="portfolio-image-container">
+            <button class="nav-arrow prev-arrow" onclick="prevImage()">&#10094;</button>
+            <img src="3fb6a4cb-d0b1-40f8-ab5d-53bc14c33d36.jpg" id="portfolio-img" alt="Josh Portfolio Page" class="portfolio-image">
+            <button class="nav-arrow next-arrow" onclick="nextImage()">&#10095;</button>
+        </div>
+        <div class="page-indicator" id="page-indicator-text">Page 1 of 2</div>
+    </main>
+
+    <footer>
+        <div>JOSH Creative Studio · Portfolio</div>
+        <div>
+            Featured by <span class="highlight">As You Are Baguio</span> · Co-hosted by Destine Events · Website powered by <span class="highlight">Disenyo Digitals</span>
+        </div>
+    </footer>
+
+    <!-- JavaScript to handle flipping the pages -->
+    <script>
+        // Array containing the exact file names provided
+        const images = [
+            "3fb6a4cb-d0b1-40f8-ab5d-53bc14c33d36.jpg", // Page 1 (Main info)
+            "2dbd93c5-d5cf-44a4-aba4-fbd1c035ea52.jpg"  // Page 2 (Certifications)
+        ];
+        
+        let currentIndex = 0;
+        const imgElement = document.getElementById("portfolio-img");
+        const indicatorText = document.getElementById("page-indicator-text");
+
+        function updateDisplay() {
+            imgElement.src = images[currentIndex];
+            indicatorText.innerText = `Page ${currentIndex + 1} of ${images.length}`;
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateDisplay();
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateDisplay();
+        }
+    </script>
+
+</body>
+</html>
