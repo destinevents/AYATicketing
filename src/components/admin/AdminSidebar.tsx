@@ -32,12 +32,14 @@ export function AdminSidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(true);
 
   useEffect(() => {
-    const saved = localStorage.getItem("admin-theme") === "dark";
-    setDark(saved);
-    document.documentElement.classList.toggle("dark", saved);
+    // Default to dark; only switch to light if user explicitly chose it
+    const saved = localStorage.getItem("admin-theme");
+    const isDark = saved !== "light";
+    setDark(isDark);
+    document.documentElement.classList.toggle("dark", isDark);
   }, []);
 
   function toggleTheme() {
