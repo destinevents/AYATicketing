@@ -5,6 +5,19 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
+function NavIcon({ active }: { active: boolean }) {
+  return (
+    <svg width="12" height="12" viewBox="0 0 12 12" className="flex-shrink-0">
+      <rect
+        x="1" y="1" width="10" height="10" rx="2"
+        fill={active ? "rgba(201,168,76,0.9)" : "none"}
+        stroke={active ? "rgba(201,168,76,0.9)" : "rgba(240,237,230,0.25)"}
+        strokeWidth="1.5"
+      />
+    </svg>
+  );
+}
+
 const NAV = [
   { href: "/admin/dashboard", label: "Dashboard" },
   { href: "/admin/events", label: "Events" },
@@ -52,7 +65,7 @@ export function AdminSidebar() {
                   : "text-fog/50 hover:bg-white/5 hover:text-fog/80"
               }`}
             >
-              <span className={`text-[10px] ${active ? "text-gold-light" : "text-fog/30"}`}>□</span>
+              <NavIcon active={active} />
               {item.label}
             </Link>
           );
@@ -67,14 +80,14 @@ export function AdminSidebar() {
           onClick={() => setOpen(false)}
           className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-fog/40 transition-colors hover:bg-white/5 hover:text-fog/70"
         >
-          <span className="text-[10px] text-fog/20">□</span>
+          <NavIcon active={false} />
           View public site
         </Link>
         <button
           onClick={handleLogout}
           className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm text-fog/40 transition-colors hover:bg-white/5 hover:text-fog/70"
         >
-          <span className="text-[10px] text-fog/20">□</span>
+          <NavIcon active={false} />
           Log out
         </button>
       </div>

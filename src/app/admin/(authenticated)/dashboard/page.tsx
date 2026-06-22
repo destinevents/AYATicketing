@@ -20,7 +20,7 @@ function BarChart({ data }: { data: { label: string; count: number }[] }) {
   const yTicks = [0, Math.ceil(max / 3), Math.ceil((max * 2) / 3), max].filter((v, i, a) => a.indexOf(v) === i);
 
   return (
-    <svg viewBox={`0 0 ${svgW} ${svgH}`} className="w-full overflow-visible">
+    <svg viewBox={`0 0 ${svgW} ${svgH}`} className="h-full w-full overflow-visible" preserveAspectRatio="none">
       {yTicks.map((v) => {
         const y = 8 + H - (v / max) * H;
         return (
@@ -192,7 +192,9 @@ export default async function AdminDashboardPage() {
           <p className="mb-5 mt-0.5 text-xs text-pine/40">
             {totalRegistrations ?? 0} total · {confirmedRegistrations ?? 0} tickets sold
           </p>
-          <BarChart data={chartData} />
+          <div className="h-44">
+            <BarChart data={chartData} />
+          </div>
         </div>
 
         {/* At a glance */}
