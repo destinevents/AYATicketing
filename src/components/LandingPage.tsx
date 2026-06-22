@@ -153,7 +153,6 @@ const STUDENTS_UCCITCS = [
 ];
 
 export default function LandingPage({ events = [], totalMembers = 0 }: LandingPageProps) {
-  const [navOpen, setNavOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'content-creators' | 'creatives'>('content-creators');
   const [smeSearch, setSmeSearch] = useState('');
   const [smeCategory, setSmeCategory] = useState('');
@@ -177,26 +176,7 @@ export default function LandingPage({ events = [], totalMembers = 0 }: LandingPa
       }
     }
 
-    // Active nav highlight on scroll
-    const handleScroll = () => {
-      const sectionIds = ['home', 'creators', 'smes', 'emag', 'events', 'join'];
-      const y = window.scrollY + 80;
-      sectionIds.forEach((id) => {
-        const el = document.getElementById(id);
-        const link = document.querySelector(`.nav-links a[href="#${id}"]`) as HTMLElement | null;
-        if (!el || !link) return;
-        if (y >= el.offsetTop && y < el.offsetTop + el.offsetHeight) {
-          link.style.color = 'var(--fog)';
-        } else {
-          link.style.color = '';
-        }
-      });
-    };
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => {};
   }, []);
 
   // Re-run scroll reveal whenever the active tab changes so newly rendered elements animate in
@@ -256,21 +236,6 @@ export default function LandingPage({ events = [], totalMembers = 0 }: LandingPa
 
   return (
     <div className="landing-wrapper">
-
-      {/* ── NAV ── */}
-      <nav className="nav" id="main-nav">
-        <div className="nav-brand"><em>As You Are</em> Baguio</div>
-        <div className={`nav-links${navOpen ? ' open' : ''}`} id="nav-links">
-          <a href="#creators">Creators</a>
-          <a href="#smes">SMEs</a>
-          <a href="#emag">eMagazine</a>
-          <a href="#events">Events</a>
-          <a href="#join" className="nav-cta">Join Community</a>
-        </div>
-        <button className="nav-toggle" onClick={() => setNavOpen((v) => !v)} aria-label="Toggle menu">
-          <span /><span /><span />
-        </button>
-      </nav>
 
       {/* ── HERO ── */}
       <section className="hero" id="home">

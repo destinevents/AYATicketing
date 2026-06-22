@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import LandingPage from "@/components/LandingPage";
+import { Navbar } from "@/components/Navbar";
 
 export const revalidate = 60;
 
@@ -17,5 +18,10 @@ export default async function HomePage() {
     supabase.from("attendees").select("*", { count: "exact", head: true }),
   ]);
 
-  return <LandingPage events={events ?? []} totalMembers={totalMembers ?? 0} />;
+  return (
+    <>
+      <Navbar />
+      <LandingPage events={events ?? []} totalMembers={totalMembers ?? 0} />
+    </>
+  );
 }

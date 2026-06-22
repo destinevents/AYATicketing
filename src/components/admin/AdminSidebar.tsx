@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 
 function NavIcon({ active }: { active: boolean }) {
@@ -32,6 +32,20 @@ export function AdminSidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [dark, setDark] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("admin-theme") === "dark";
+    setDark(saved);
+    document.documentElement.classList.toggle("dark", saved);
+  }, []);
+
+  function toggleTheme() {
+    const next = !dark;
+    setDark(next);
+    localStorage.setItem("admin-theme", next ? "dark" : "light");
+    document.documentElement.classList.toggle("dark", next);
+  }
 
   async function handleLogout() {
     const supabase = createClient();
@@ -74,6 +88,14 @@ export function AdminSidebar() {
 
       {/* Bottom links */}
       <div className="mt-auto space-y-0.5 border-t border-fog/10 px-2 pt-4">
+        {/* Dark / Light mode toggle */}
+        <button
+          onClick={toggleTheme}
+          className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm text-fog/50 transition-colors hover:bg-white/5 hover:text-fog/80"
+        >
+          <span className="text-base leading-none">{dark ? "☀️" : "🌙"}</span>
+          {dark ? "Light mode" : "Dark mode"}
+        </button>
         <Link
           href="/events"
           target="_blank"

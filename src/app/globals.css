@@ -47,3 +47,37 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-gold);
 }
+
+/* ── Admin dark mode ── */
+.admin-main { transition: background-color 0.2s ease, color 0.2s ease; }
+
+html.dark .admin-main { background-color: #1D2219; color: #E8E4DC; }
+html.dark .admin-main .bg-white { background-color: #263022 !important; }
+html.dark .admin-main .bg-fog-warm { background-color: #1D2219 !important; }
+html.dark .admin-main .min-h-screen { background-color: #1D2219 !important; }
+
+html.dark .admin-main .text-pine { color: #C9D5C7 !important; }
+html.dark .admin-main .text-ink { color: #E8E4DC !important; }
+html.dark .admin-main .text-muted { color: rgba(240,237,230,0.45) !important; }
+
+html.dark .admin-main .border-pine\/10,
+html.dark .admin-main .border-pine\/8,
+html.dark .admin-main .border-pine\/15 { border-color: rgba(240,237,230,0.08) !important; }
+
+html.dark .admin-main table tbody tr { border-color: rgba(240,237,230,0.05) !important; }
+html.dark .admin-main table thead tr { background-color: rgba(240,237,230,0.03) !important; }
+html.dark .admin-main .divide-pine\/5 > * { border-color: rgba(240,237,230,0.05) !important; }
+
+html.dark .admin-main .rounded-xl,
+html.dark .admin-main .rounded-2xl { border-color: rgba(240,237,230,0.07) !important; }
+
+html.dark .admin-main input,
+html.dark .admin-main select,
+html.dark .admin-main textarea {
+  background-color: #1D2219 !important;
+  border-color: rgba(240,237,230,0.12) !important;
+  color: #E8E4DC !important;
+}
+
+html.dark .admin-main .bg-pine\/\[0\.02\] { background-color: rgba(240,237,230,0.03) !important; }
+html.dark .admin-main .bg-pine\/5 { background-color: rgba(240,237,230,0.05) !important; }
