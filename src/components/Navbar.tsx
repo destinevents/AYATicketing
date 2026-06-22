@@ -3,7 +3,12 @@
 import Link from "next/link";
 import { useState } from "react";
 
-const AYA_URL = "https://www.destinevents.biz/asyouarebaguio";
+const NAV_LINKS = [
+  { label: "Creators", href: "/#creators" },
+  { label: "SMEs", href: "/#smes" },
+  { label: "eMagazine", href: "/#emag" },
+  { label: "Events", href: "/events" },
+];
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -17,17 +22,20 @@ export function Navbar() {
 
         {/* Desktop nav */}
         <div className="ml-auto hidden items-center gap-8 md:flex">
-          <Link href="/events" className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-fog/60 transition-colors hover:text-fog">
-            Events
-          </Link>
-          <a href={AYA_URL} target="_blank" rel="noreferrer" className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-fog/60 transition-colors hover:text-fog">
-            Community
-          </a>
-          <a href={AYA_URL} target="_blank" rel="noreferrer" className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-fog/60 transition-colors hover:text-fog">
-            eMagazine
-          </a>
-          <Link href="/events" className="rounded-sm bg-gold px-6 py-2 font-mono text-[0.65rem] font-medium uppercase tracking-[0.14em] text-pine-deep transition-colors hover:bg-gold-light">
-            Get Tickets
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-fog/60 transition-colors hover:text-fog"
+            >
+              {link.label}
+            </Link>
+          ))}
+          <Link
+            href="/#join"
+            className="rounded-sm bg-gold px-6 py-2 font-mono text-[0.65rem] font-medium uppercase tracking-[0.14em] text-pine-deep transition-colors hover:bg-gold-light"
+          >
+            Join Community
           </Link>
         </div>
 
@@ -47,17 +55,22 @@ export function Navbar() {
       {open && (
         <div className="border-t border-fog/10 bg-pine-deep px-6 py-4 md:hidden">
           <div className="flex flex-col gap-1">
-            <Link href="/events" onClick={() => setOpen(false)} className="rounded-md px-3 py-3 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-fog/70 transition-colors hover:bg-white/5 hover:text-fog">
-              Events
-            </Link>
-            <a href={AYA_URL} target="_blank" rel="noreferrer" onClick={() => setOpen(false)} className="rounded-md px-3 py-3 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-fog/70 transition-colors hover:bg-white/5 hover:text-fog">
-              Community
-            </a>
-            <a href={AYA_URL} target="_blank" rel="noreferrer" onClick={() => setOpen(false)} className="rounded-md px-3 py-3 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-fog/70 transition-colors hover:bg-white/5 hover:text-fog">
-              eMagazine
-            </a>
-            <Link href="/events" onClick={() => setOpen(false)} className="mt-2 rounded-sm bg-gold px-6 py-3 text-center font-mono text-[0.65rem] font-medium uppercase tracking-[0.14em] text-pine-deep transition-colors hover:bg-gold-light">
-              Get Tickets
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="rounded-md px-3 py-3 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-fog/70 transition-colors hover:bg-white/5 hover:text-fog"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <Link
+              href="/#join"
+              onClick={() => setOpen(false)}
+              className="mt-2 rounded-sm bg-gold px-6 py-3 text-center font-mono text-[0.65rem] font-medium uppercase tracking-[0.14em] text-pine-deep transition-colors hover:bg-gold-light"
+            >
+              Join Community
             </Link>
           </div>
         </div>

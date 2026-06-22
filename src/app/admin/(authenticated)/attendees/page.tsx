@@ -8,26 +8,50 @@ export const revalidate = 0;
 const ARCHETYPE_ORDER: CommunityArchetype[] = ["founder", "creative", "community_builder", "enabler"];
 
 interface AttendeesPageProps {
-  searchParams: Promise<{ archetype?: string }>;
+  searchParams: Promise<{ archetype?: string; event?: string }>;
 }
 
 export default async function AttendeesPage({ searchParams }: AttendeesPageProps) {
-  const { archetype: archetypeFilter } = await searchParams;
+  const { archetype: archetypeFilter, event: eventFilter } = await searchParams;
   const supabase = await createClient();
+
+  // Fetch all events for the filter pills
+  const { data: events } = await supabase
+    .from("events")
+    .select("id, title")
+    .order("start_date", { ascending: false });
+
+  // If filtering by event, get the attendee IDs who registered for that event
+  let filteredAttendeeIds: string[] | null = null;
+  if (eventFilter) {
+    const { data: regs } = await supabase
+      .from("registrations")
+      .select("attendee_id")
+      .eq("event_id", eventFilter)
+      .not("attendee_id", "is", null);
+    filteredAttendeeIds = (regs ?? []).map((r) => r.attendee_id as string);
+  }
 
   let query = supabase
     .from("attendees")
-    .select("*, registrations(id, events(title), status)")
+    .select("*, registrations(id, events(id, title), status)")
     .order("first_seen_at", { ascending: false });
 
   if (archetypeFilter) {
     query = query.eq("archetype", archetypeFilter);
   }
+  if (filteredAttendeeIds !== null) {
+    query = filteredAttendeeIds.length > 0
+      ? query.in("id", filteredAttendeeIds)
+      : query.eq("id", "00000000-0000-0000-0000-000000000000"); // no results
+  }
 
   const { data: attendees } = await query;
 
-  // Full counts (unfiltered) for the breakdown pills
-  const { data: allAttendees } = await supabase.from("attendees").select("archetype, newsletter_opt_in, networking_opt_in");
+  // Full counts (unfiltered) for archetype pills
+  const { data: allAttendees } = await supabase
+    .from("attendees")
+    .select("archetype, newsletter_opt_in, networking_opt_in");
 
   const totalNewsletter = allAttendees?.filter((a) => a.newsletter_opt_in).length ?? 0;
   const totalNetworking = allAttendees?.filter((a) => a.networking_opt_in).length ?? 0;
@@ -35,6 +59,18 @@ export default async function AttendeesPage({ searchParams }: AttendeesPageProps
     acc[key] = allAttendees?.filter((a) => a.archetype === key).length ?? 0;
     return acc;
   }, {});
+
+  // Build href helper that merges filters
+  function filterHref(params: { archetype?: string | null; event?: string | null }) {
+    const p = new URLSearchParams();
+    const arch = params.archetype ?? archetypeFilter;
+    const evt = params.event ?? eventFilter;
+    if (arch) p.set("archetype", arch);
+    if (evt) p.set("event", evt);
+    return `/admin/attendees${p.toString() ? `?${p}` : ""}`;
+  }
+
+  const selectedEvent = events?.find((e) => e.id === eventFilter);
 
   return (
     <div className="p-4 sm:p-6 md:p-8">
@@ -61,33 +97,76 @@ export default async function AttendeesPage({ searchParams }: AttendeesPageProps
         </div>
       </div>
 
-      {/* Archetype breakdown / filter */}
-      <div className="mb-6 flex flex-wrap gap-2">
-        <Link
-          href="/admin/attendees"
-          className={`rounded-full border px-3 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.1em] transition-colors ${
-            !archetypeFilter ? "border-pine bg-pine text-fog" : "border-pine/15 text-muted hover:border-pine/30"
-          }`}
-        >
-          All ({allAttendees?.length ?? 0})
-        </Link>
-        {ARCHETYPE_ORDER.map((key) => {
-          const meta = ARCHETYPE_META[key];
-          const active = archetypeFilter === key;
-          return (
+      {/* Event filter */}
+      <div className="mb-4">
+        <p className="mb-2 font-mono text-[0.58rem] uppercase tracking-[0.1em] text-muted">Filter by event</p>
+        <div className="flex flex-wrap gap-2">
+          <Link
+            href={filterHref({ event: null })}
+            className={`rounded-full border px-3 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.1em] transition-colors ${
+              !eventFilter ? "border-pine bg-pine text-fog" : "border-pine/15 text-muted hover:border-pine/30"
+            }`}
+          >
+            All events
+          </Link>
+          {events?.map((evt) => (
             <Link
-              key={key}
-              href={`/admin/attendees?archetype=${key}`}
+              key={evt.id}
+              href={filterHref({ event: evt.id })}
               className={`rounded-full border px-3 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.1em] transition-colors ${
-                active ? "border-gold bg-gold/15 text-terra" : "border-pine/15 text-muted hover:border-gold/30"
+                eventFilter === evt.id
+                  ? "border-gold bg-gold/15 text-terra"
+                  : "border-pine/15 text-muted hover:border-gold/30"
               }`}
-              title={meta.tagline}
             >
-              {meta.emoji} {meta.label} ({archetypeCounts[key] ?? 0})
+              {evt.title}
             </Link>
-          );
-        })}
+          ))}
+        </div>
       </div>
+
+      {/* Archetype filter */}
+      <div className="mb-6">
+        <p className="mb-2 font-mono text-[0.58rem] uppercase tracking-[0.1em] text-muted">Filter by archetype</p>
+        <div className="flex flex-wrap gap-2">
+          <Link
+            href={filterHref({ archetype: null })}
+            className={`rounded-full border px-3 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.1em] transition-colors ${
+              !archetypeFilter ? "border-pine bg-pine text-fog" : "border-pine/15 text-muted hover:border-pine/30"
+            }`}
+          >
+            All ({allAttendees?.length ?? 0})
+          </Link>
+          {ARCHETYPE_ORDER.map((key) => {
+            const meta = ARCHETYPE_META[key];
+            const active = archetypeFilter === key;
+            return (
+              <Link
+                key={key}
+                href={filterHref({ archetype: key })}
+                className={`rounded-full border px-3 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.1em] transition-colors ${
+                  active ? "border-gold bg-gold/15 text-terra" : "border-pine/15 text-muted hover:border-gold/30"
+                }`}
+                title={meta.tagline}
+              >
+                {meta.emoji} {meta.label} ({archetypeCounts[key] ?? 0})
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Active filters summary */}
+      {(eventFilter || archetypeFilter) && (
+        <div className="mb-4 flex items-center gap-2 rounded-lg bg-gold/5 px-4 py-2 text-xs text-pine/70">
+          <span>Showing:</span>
+          {selectedEvent && <span className="font-medium">{selectedEvent.title}</span>}
+          {selectedEvent && archetypeFilter && <span>·</span>}
+          {archetypeFilter && <span className="font-medium capitalize">{archetypeFilter.replace("_", " ")}</span>}
+          <span>— {attendees?.length ?? 0} attendee{attendees?.length !== 1 ? "s" : ""}</span>
+          <Link href="/admin/attendees" className="ml-auto text-terra hover:underline">Clear filters</Link>
+        </div>
+      )}
 
       <div className="overflow-x-auto rounded-xl border border-pine/10 bg-white">
         <table className="w-full min-w-[900px] text-sm">
@@ -151,8 +230,8 @@ export default async function AttendeesPage({ searchParams }: AttendeesPageProps
         </table>
         {(!attendees || attendees.length === 0) && (
           <div className="py-12 text-center text-sm text-muted">
-            {archetypeFilter
-              ? "No attendees with this archetype yet."
+            {eventFilter || archetypeFilter
+              ? "No attendees match the selected filters."
               : "No attendees yet — they'll appear here automatically after registrations."}
           </div>
         )}
