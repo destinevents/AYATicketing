@@ -19,7 +19,7 @@ export default async function EmailMarketingPage() {
   const resendConfigured = !!process.env.RESEND_API_KEY;
 
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-6 md:p-8">
       <div className="mb-8">
         <h1 className="font-display text-3xl text-pine">Email Marketing</h1>
         <p className="mt-1 text-sm text-muted">

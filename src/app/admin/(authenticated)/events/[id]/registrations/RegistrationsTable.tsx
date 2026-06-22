@@ -26,8 +26,8 @@ const REG_STATUSES: RegistrationStatus[] = ["pending", "confirmed", "cancelled",
 
 export function RegistrationsTable({ registrations }: { registrations: RegistrationRow[] }) {
   return (
-    <div className="overflow-hidden rounded-xl border border-pine/10 bg-white">
-      <table className="w-full text-sm">
+    <div className="overflow-x-auto rounded-xl border border-pine/10 bg-white">
+      <table className="w-full min-w-[700px] text-sm">
         <thead>
           <tr className="border-b border-pine/10 bg-pine/[0.02] text-left font-mono text-[0.58rem] uppercase tracking-[0.1em] text-muted">
             <th className="px-5 py-3">Attendee</th>

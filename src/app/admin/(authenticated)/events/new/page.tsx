@@ -3,7 +3,7 @@ import { EventForm } from "../EventForm";
 
 export default function NewEventPage() {
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-6 md:p-8">
       <Link href="/admin/events" className="mb-4 inline-flex items-center gap-2 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-muted hover:text-pine">
         ← Back to Events
       </Link>

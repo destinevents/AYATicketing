@@ -37,8 +37,8 @@ export default async function AttendeesPage({ searchParams }: AttendeesPageProps
   }, {});
 
   return (
-    <div className="p-8">
-      <div className="mb-6 flex items-center justify-between">
+    <div className="p-4 sm:p-6 md:p-8">
+      <div className="mb-6 flex flex-wrap items-start justify-between gap-3 sm:flex-nowrap sm:items-center">
         <div>
           <h1 className="font-display text-3xl text-pine">Community CRM</h1>
           <p className="mt-1 text-sm text-muted">
@@ -89,8 +89,8 @@ export default async function AttendeesPage({ searchParams }: AttendeesPageProps
         })}
       </div>
 
-      <div className="overflow-hidden rounded-xl border border-pine/10 bg-white">
-        <table className="w-full text-sm">
+      <div className="overflow-x-auto rounded-xl border border-pine/10 bg-white">
+        <table className="w-full min-w-[800px] text-sm">
           <thead>
             <tr className="border-b border-pine/10 bg-pine/[0.02] text-left font-mono text-[0.58rem] uppercase tracking-[0.1em] text-muted">
               <th className="px-5 py-3">Name</th>

@@ -6,6 +6,13 @@ function authHeader() {
   return "Basic " + Buffer.from(process.env.PAYMONGO_SECRET_KEY + ":").toString("base64");
 }
 
+const ARCHETYPE_LABELS: Record<string, string> = {
+  founder: "Founder",
+  creative: "Creative",
+  community_builder: "Community Builder",
+  enabler: "Enabler",
+};
+
 export async function createCheckoutSession({
   registrationId,
   amountPhp,
@@ -14,6 +21,7 @@ export async function createCheckoutSession({
   email,
   name,
   phone,
+  archetype,
   successUrl,
   cancelUrl,
 }: {
@@ -24,6 +32,7 @@ export async function createCheckoutSession({
   email: string;
   name: string;
   phone?: string;
+  archetype?: string | null;
   successUrl: string;
   cancelUrl: string;
 }) {
@@ -45,7 +54,7 @@ export async function createCheckoutSession({
               quantity: 1,
             },
           ],
-          description: `${name} — ${ticketName} · ${eventTitle}`,
+          description: [archetype ? ARCHETYPE_LABELS[archetype] : null, name, `${ticketName} · ${eventTitle}`].filter(Boolean).join(" · "),
           payment_method_types: ["gcash", "paymaya", "card", "qrph"],
           success_url: successUrl,
           cancel_url: cancelUrl,

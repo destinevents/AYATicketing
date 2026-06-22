@@ -114,6 +114,7 @@ export async function POST(request: Request) {
           email: body.email,
           name: body.full_name,
           phone: body.mobile_number,
+          archetype: body.archetype ?? null,
           successUrl: `${siteUrl}/events/payment-success?registration_id=${registration.id}`,
           cancelUrl: `${siteUrl}/events/confirmation/${registration.id}?payment=cancelled`,
         });

@@ -16,7 +16,7 @@ export default async function SponsorsPage() {
   const confirmedCount = (sponsors ?? []).filter((s) => s.status !== "lead").length;
 
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-6 md:p-8">
       <div className="mb-8">
         <h1 className="font-display text-3xl text-pine">Sponsors</h1>
         <p className="mt-1 text-sm text-muted">

@@ -45,8 +45,8 @@ export default async function AdminDashboardPage() {
     .limit(5);
 
   return (
-    <div className="p-8">
-      <div className="mb-8 flex items-center justify-between">
+    <div className="p-4 sm:p-6 md:p-8">
+      <div className="mb-6 flex flex-wrap items-start justify-between gap-3 sm:mb-8 sm:flex-nowrap sm:items-center">
         <div>
           <h1 className="font-display text-3xl text-pine">Dashboard</h1>
           <p className="mt-1 text-sm text-muted">AYA Events Hub overview</p>
