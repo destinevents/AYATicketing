@@ -135,6 +135,7 @@ export async function sendPaymentConfirmedEmail(
       ticketPrice: formatCurrency(ticket.price),
       qrCodeDataUrl: qrDataUrl,
       qrCodeToken: registration.qr_code ?? "",
+      archetype: registration.archetype as "founder" | "creative" | "community_builder" | "enabler" | null,
     })
   );
 
