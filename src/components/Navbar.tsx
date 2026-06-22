@@ -15,7 +15,7 @@ export function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 border-b border-fog/10 bg-pine-deep/95 backdrop-blur-md">
-      <div className="mx-auto flex h-[72px] max-w-6xl items-center gap-8 px-6">
+      <div className="flex h-[72px] w-full items-center px-6 md:px-10">
         <Link href="/" className="font-display text-xl text-fog">
           <em className="italic text-gold-light">As You Are</em> Baguio
         </Link>

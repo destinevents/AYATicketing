@@ -60,6 +60,13 @@ html.dark .admin-main .text-pine { color: #C9D5C7 !important; }
 html.dark .admin-main .text-ink { color: #E8E4DC !important; }
 html.dark .admin-main .text-muted { color: rgba(240,237,230,0.45) !important; }
 
+/* Opacity text variants that become invisible on dark backgrounds */
+html.dark .admin-main [class*="text-pine/"] { color: rgba(201,213,199,0.6) !important; }
+html.dark .admin-main [class*="text-ink/"] { color: rgba(232,228,220,0.6) !important; }
+html.dark .admin-main .text-pine\/40 { color: rgba(201,213,199,0.45) !important; }
+html.dark .admin-main .text-pine\/50 { color: rgba(201,213,199,0.5) !important; }
+html.dark .admin-main .text-pine\/70 { color: rgba(201,213,199,0.7) !important; }
+
 html.dark .admin-main .border-pine\/10,
 html.dark .admin-main .border-pine\/8,
 html.dark .admin-main .border-pine\/15 { border-color: rgba(240,237,230,0.08) !important; }
