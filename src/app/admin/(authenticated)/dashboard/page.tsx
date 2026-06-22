@@ -6,53 +6,157 @@ export const revalidate = 0;
 
 /* ─── Mini chart components (pure SVG, server-renderable) ─── */
 
-function BarChart({ data }: { data: { label: string; count: number }[] }) {
+function BarChart({
+  data,
+  total,
+  sold,
+}: {
+  data: { label: string; count: number }[];
+  total: number;
+  sold: number;
+}) {
   const max = Math.max(...data.map((d) => d.count), 1);
-  const H = 40;
-  const barW = 22;
-  const gap = 10;
-  const padL = 24;
-  const padB = 22;
-  const chartW = data.length * (barW + gap) - gap;
-  const svgW = chartW + padL + 8;
-  const svgH = H + padB + 10;
-
-  const yTicks = [0, Math.ceil(max / 3), Math.ceil((max * 2) / 3), max].filter((v, i, a) => a.indexOf(v) === i);
+  const maxIdx = data.reduce((best, d, i) => (d.count > data[best].count ? i : best), 0);
+  const yTicks = [max, Math.round((max * 2) / 3), Math.round(max / 3), 0];
 
   return (
-    <svg viewBox={`0 0 ${svgW} ${svgH}`} className="w-full overflow-visible">
-      {yTicks.map((v) => {
-        const y = 8 + H - (v / max) * H;
-        return (
-          <g key={v}>
-            <line x1={padL} y1={y} x2={padL + chartW} y2={y} stroke="#e5e0d8" strokeWidth={0.8} />
-            <text x={padL - 5} y={y + 3} textAnchor="end" fontSize={8} fill="#bbb" fontFamily="monospace">
-              {v}
-            </text>
-          </g>
-        );
-      })}
-      {data.map((d, i) => {
-        const bh = Math.max((d.count / max) * H, d.count > 0 ? 3 : 0);
-        const x = padL + i * (barW + gap);
-        const y = 8 + H - bh;
-        return (
-          <g key={i}>
-            <rect x={x} y={y} width={barW} height={bh} rx={4} fill="#3D5A40" fillOpacity={0.75} />
-            <text
-              x={x + barW / 2}
-              y={8 + H + padB - 4}
-              textAnchor="middle"
-              fontSize={8}
-              fill="#999"
-              fontFamily="monospace"
+    <div
+      style={{
+        background: "#1D2219",
+        border: "1px solid rgba(240,237,230,0.07)",
+        borderRadius: "14px",
+        padding: "26px 28px",
+      }}
+    >
+      <p
+        style={{
+          fontFamily: "var(--font-fraunces), Fraunces, serif",
+          fontSize: "19px",
+          color: "#F0EDE6",
+          fontWeight: 400,
+          margin: "0 0 4px",
+        }}
+      >
+        Registrations this week
+      </p>
+      <p
+        style={{
+          fontFamily: "var(--font-dm-sans), DM Sans, sans-serif",
+          fontSize: "12.5px",
+          color: "rgba(240,237,230,0.4)",
+          margin: "0 0 22px",
+        }}
+      >
+        {total} total · {sold} tickets sold
+      </p>
+
+      <div style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
+        {/* Y-axis labels */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            height: "142px",
+            flexShrink: 0,
+            width: "24px",
+          }}
+        >
+          {yTicks.map((v) => (
+            <span
+              key={v}
+              style={{
+                fontFamily: "var(--font-dm-mono), DM Mono, monospace",
+                fontSize: "11px",
+                color: "rgba(240,237,230,0.35)",
+                textAlign: "right",
+                display: "block",
+                lineHeight: 1,
+              }}
             >
-              {d.label}
-            </text>
-          </g>
-        );
-      })}
-    </svg>
+              {v}
+            </span>
+          ))}
+        </div>
+
+        {/* Chart area */}
+        <div style={{ flex: 1 }}>
+          <div style={{ position: "relative", height: "142px" }}>
+            {/* Grid lines */}
+            {[0, 33, 66, 100].map((pct) => (
+              <div
+                key={pct}
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  top: `${pct}%`,
+                  height: "1px",
+                  background: "rgba(240,237,230,0.08)",
+                }}
+              />
+            ))}
+            {/* Bars */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-end",
+                height: "100%",
+                gap: "18px",
+              }}
+            >
+              {data.map((d, i) => {
+                const pct = d.count > 0 ? Math.max((d.count / max) * 100, 3) : 0;
+                const isPeak = i === maxIdx && d.count > 0;
+                return (
+                  <div
+                    key={i}
+                    style={{
+                      flex: 1,
+                      display: "flex",
+                      alignItems: "flex-end",
+                      justifyContent: "center",
+                      height: "100%",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "100%",
+                        maxWidth: "38px",
+                        height: `${pct}%`,
+                        background: isPeak ? "#8FB079" : "#6B8A5A",
+                        borderRadius: "4px 4px 0 0",
+                      }}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Day labels */}
+          <div style={{ display: "flex", gap: "18px", marginTop: "8px" }}>
+            {data.map((d, i) => (
+              <div
+                key={i}
+                style={{
+                  flex: 1,
+                  textAlign: "center",
+                  fontFamily: "var(--font-dm-mono), DM Mono, monospace",
+                  fontSize: "10.5px",
+                  color: "rgba(240,237,230,0.4)",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {d.label}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -187,13 +291,11 @@ export default async function AdminDashboardPage() {
       {/* Row 1: bar chart + at a glance */}
       <div className="mb-5 grid gap-5 lg:grid-cols-[1fr_300px]">
         {/* Bar chart */}
-        <div className="rounded-2xl border border-pine/8 bg-white p-6">
-          <h2 className="font-display text-lg font-semibold text-pine">Registrations this week</h2>
-          <p className="mb-5 mt-0.5 text-xs text-pine/40">
-            {totalRegistrations ?? 0} total · {confirmedRegistrations ?? 0} tickets sold
-          </p>
-          <BarChart data={chartData} />
-        </div>
+        <BarChart
+          data={chartData}
+          total={totalRegistrations ?? 0}
+          sold={confirmedRegistrations ?? 0}
+        />
 
         {/* At a glance */}
         <div className="rounded-2xl border border-pine/8 bg-white p-6">
