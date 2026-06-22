@@ -8,8 +8,8 @@ export const revalidate = 0;
 
 function BarChart({ data }: { data: { label: string; count: number }[] }) {
   const max = Math.max(...data.map((d) => d.count), 1);
-  const H = 100;
-  const barW = 30;
+  const H = 60;
+  const barW = 28;
   const gap = 10;
   const padL = 24;
   const padB = 22;
