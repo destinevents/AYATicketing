@@ -9,7 +9,7 @@ export default async function HomePage() {
   const [{ data: events }, { count: totalMembers }] = await Promise.all([
     supabase
       .from("events")
-      .select("id, title, slug, start_date, end_date, venue_name, category, event_tickets(name, price, capacity, sold, status)")
+      .select("id, title, slug, start_date, end_date, venue_name, category, cover_image_url, event_tickets(name, price, capacity, sold, status)")
       .eq("status", "published")
       .gte("start_date", new Date().toISOString())
       .order("start_date", { ascending: true })

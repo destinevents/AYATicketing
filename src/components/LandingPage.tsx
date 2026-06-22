@@ -19,6 +19,7 @@ interface LiveEvent {
   end_date: string | null;
   venue_name: string | null;
   category: string;
+  cover_image_url?: string | null;
   event_tickets: EventTicket[];
 }
 
@@ -696,7 +697,10 @@ export default function LandingPage({ events = [], totalMembers = 0 }: LandingPa
               return (
                 <div key={event.id} className="event-card">
                   <div className="event-cover">
-                    <div className="event-cover-bg" style={{ background: style.gradient }}>{style.emoji}</div>
+                    {event.cover_image_url
+                      ? <img src={event.cover_image_url} alt={event.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                      : <div className="event-cover-bg" style={{ background: style.gradient }}>{style.emoji}</div>
+                    }
                     <div className="event-date-badge"><div className="day">{day}</div><div className="month">{month}</div></div>
                   </div>
                   <div className="event-body">

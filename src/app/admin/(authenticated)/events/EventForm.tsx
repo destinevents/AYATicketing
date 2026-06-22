@@ -54,6 +54,10 @@ export function EventForm({ mode, initialEvent }: EventFormProps) {
   );
   const [organizerContact, setOrganizerContact] = useState(initialEvent?.organizer_contact ?? "");
 
+  // Cover image
+  const [coverImageUrl, setCoverImageUrl] = useState<string | null>(initialEvent?.cover_image_url ?? null);
+  const [coverUploading, setCoverUploading] = useState(false);
+
   // Gallery — stored as array of public URLs
   const [galleryImages, setGalleryImages] = useState<string[]>(
     initialEvent?.gallery_image_urls ?? []
@@ -76,7 +80,26 @@ export function EventForm({ mode, initialEvent }: EventFormProps) {
     if (!slugTouched) setSlug(slugify(value));
   }
 
-  /* ── Image upload ── */
+  /* ── Cover image upload ── */
+  async function handleCoverUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setCoverUploading(true);
+    const supabase = createClient();
+    const ext = file.name.split(".").pop() ?? "jpg";
+    const path = `covers/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const { error: upErr } = await supabase.storage
+      .from("event-images")
+      .upload(path, file, { cacheControl: "3600", upsert: false });
+    if (!upErr) {
+      const { data } = supabase.storage.from("event-images").getPublicUrl(path);
+      setCoverImageUrl(data.publicUrl);
+    }
+    setCoverUploading(false);
+    e.target.value = "";
+  }
+
+  /* ── Gallery upload ── */
   async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files ?? []);
     if (!files.length) return;
@@ -154,6 +177,7 @@ export function EventForm({ mode, initialEvent }: EventFormProps) {
       venue_map_url: venueMapUrl || null,
       organizer_name: organizerName || null,
       organizer_contact: organizerContact || null,
+      cover_image_url: coverImageUrl,
       gallery_image_urls: galleryImages,
       schedule: schedule.filter((r) => r.time || r.title),
       faqs: faqs.filter((r) => r.question || r.answer),
@@ -260,6 +284,29 @@ export function EventForm({ mode, initialEvent }: EventFormProps) {
           <Field label="Organizer Contact Email">
             <input value={organizerContact} onChange={(e) => setOrganizerContact(e.target.value)} className={inputClass} placeholder="jenncastro@destinevents.biz" />
           </Field>
+        </div>
+      </div>
+
+      {/* Cover Image */}
+      <div className="rounded-xl border border-pine/10 bg-white p-5">
+        <h3 className="mb-1 font-display text-lg text-pine">Cover Image</h3>
+        <p className="mb-4 text-xs text-muted">Shown on the event card on the homepage and events listing. Recommended: 16:9 landscape photo.</p>
+        <div className="flex items-start gap-5">
+          {coverImageUrl && (
+            <div className="group relative flex-shrink-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={coverImageUrl} alt="Cover" className="h-28 w-48 rounded-lg object-cover" />
+              <button type="button" onClick={() => setCoverImageUrl(null)} className="absolute right-1 top-1 hidden h-6 w-6 items-center justify-center rounded-full bg-black/60 text-xs text-white group-hover:flex">×</button>
+            </div>
+          )}
+          <label className={`flex flex-1 cursor-pointer items-center gap-3 rounded-lg border-2 border-dashed border-pine/20 p-4 transition-colors hover:border-pine/40 ${coverUploading ? "pointer-events-none opacity-60" : ""}`}>
+            <input type="file" accept="image/*" className="hidden" onChange={handleCoverUpload} disabled={coverUploading} />
+            <span className="text-2xl">🖼️</span>
+            <div>
+              <div className="text-sm font-medium text-pine">{coverUploading ? "Uploading…" : coverImageUrl ? "Replace cover photo" : "Upload cover photo"}</div>
+              <div className="text-xs text-muted">JPG, PNG, WebP</div>
+            </div>
+          </label>
         </div>
       </div>
 
