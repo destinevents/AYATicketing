@@ -90,11 +90,12 @@ export default async function AttendeesPage({ searchParams }: AttendeesPageProps
       </div>
 
       <div className="overflow-x-auto rounded-xl border border-pine/10 bg-white">
-        <table className="w-full min-w-[800px] text-sm">
+        <table className="w-full min-w-[900px] text-sm">
           <thead>
             <tr className="border-b border-pine/10 bg-pine/[0.02] text-left font-mono text-[0.58rem] uppercase tracking-[0.1em] text-muted">
               <th className="px-5 py-3">Name</th>
               <th className="px-5 py-3">Email</th>
+              <th className="px-5 py-3">Phone</th>
               <th className="px-5 py-3">Business</th>
               <th className="px-5 py-3">Industry</th>
               <th className="px-5 py-3">Archetype</th>
@@ -111,6 +112,7 @@ export default async function AttendeesPage({ searchParams }: AttendeesPageProps
                 <tr key={attendee.id} className="border-b border-pine/5 last:border-0">
                   <td className="px-5 py-3 font-display text-pine">{attendee.full_name}</td>
                   <td className="px-5 py-3 text-muted">{attendee.email}</td>
+                  <td className="px-5 py-3 text-muted">{attendee.mobile_number ?? "—"}</td>
                   <td className="px-5 py-3 text-muted">{attendee.business_name ?? "—"}</td>
                   <td className="px-5 py-3 text-muted">{attendee.industry ?? "—"}</td>
                   <td className="px-5 py-3">

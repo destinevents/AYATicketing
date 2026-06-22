@@ -54,7 +54,7 @@ export async function createCheckoutSession({
               quantity: 1,
             },
           ],
-          description: [archetype ? ARCHETYPE_LABELS[archetype] : null, name, `${ticketName} · ${eventTitle}`].filter(Boolean).join(" · "),
+          description: [archetype ? ARCHETYPE_LABELS[archetype] : null, name, phone || null, `${ticketName} · ${eventTitle}`].filter(Boolean).join(" · "),
           payment_method_types: ["gcash", "paymaya", "card", "qrph"],
           success_url: successUrl,
           cancel_url: cancelUrl,
