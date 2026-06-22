@@ -124,21 +124,6 @@ export default function LandingPage() {
       }
     }
 
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.landing-wrapper .reveal');
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('visible');
-            observer.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-    reveals.forEach((el) => observer.observe(el));
-
     // Active nav highlight on scroll
     const handleScroll = () => {
       const sectionIds = ['home', 'creators', 'smes', 'emag', 'events', 'join'];
@@ -157,10 +142,27 @@ export default function LandingPage() {
     window.addEventListener('scroll', handleScroll);
 
     return () => {
-      observer.disconnect();
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  // Re-run scroll reveal whenever the active tab changes so newly rendered elements animate in
+  useEffect(() => {
+    const reveals = document.querySelectorAll('.landing-wrapper .reveal:not(.visible)');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            observer.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    reveals.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [activeTab]);
 
   const showToast = (msg: string) => {
     setToastMsg(msg);
