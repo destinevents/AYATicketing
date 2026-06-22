@@ -45,7 +45,7 @@ export async function createCheckoutSession({
               quantity: 1,
             },
           ],
-          payment_method_types: ["qrph"],
+          payment_method_types: ["gcash", "paymaya", "card", "qrph"],
           success_url: successUrl,
           cancel_url: cancelUrl,
           metadata: { registration_id: registrationId },

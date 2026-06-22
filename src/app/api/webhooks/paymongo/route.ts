@@ -46,6 +46,18 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Registration not found" }, { status: 404 });
   }
 
+  // Idempotency check — if already confirmed, do nothing (duplicate webhook delivery)
+  const { data: existingPayment } = await supabase
+    .from("payments")
+    .select("status")
+    .eq("registration_id", registrationId)
+    .single();
+
+  if (existingPayment?.status === "paid") {
+    console.log("[PayMongo webhook] Already confirmed, skipping:", registrationId);
+    return NextResponse.json({ received: true });
+  }
+
   // Confirm registration
   const { data: confirmed } = await supabase
     .from("registrations")

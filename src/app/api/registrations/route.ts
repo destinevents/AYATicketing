@@ -114,8 +114,8 @@ export async function POST(request: Request) {
           email: body.email,
           name: body.full_name,
           phone: body.mobile_number,
-          successUrl: `${siteUrl}/events/confirmation/${registration.id}`,
-          cancelUrl: `${siteUrl}/events/${event?.slug ?? ""}`,
+          successUrl: `${siteUrl}/events/payment-success?registration_id=${registration.id}`,
+          cancelUrl: `${siteUrl}/events/confirmation/${registration.id}?payment=cancelled`,
         });
         checkoutUrl = session.checkoutUrl;
       } catch {

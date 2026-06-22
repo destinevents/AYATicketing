@@ -9,10 +9,13 @@ import { PayNowButton } from "@/components/PayNowButton";
 
 interface ConfirmationPageProps {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ payment?: string }>;
 }
 
-export default async function ConfirmationPage({ params }: ConfirmationPageProps) {
+export default async function ConfirmationPage({ params, searchParams }: ConfirmationPageProps) {
   const { id } = await params;
+  const { payment } = await searchParams;
+  const paymentCancelled = payment === "cancelled";
   const supabase = await createClient();
 
   const { data: registration } = await supabase
@@ -38,6 +41,16 @@ export default async function ConfirmationPage({ params }: ConfirmationPageProps
 
       <main className="min-h-[70vh] bg-fog-warm px-6 py-12 md:py-16">
         <div className="mx-auto max-w-lg">
+          {/* Cancelled payment banner */}
+          {paymentCancelled && (
+            <div className="mb-6 rounded-xl border border-terra/30 bg-terra/5 p-4 text-sm text-ink/80">
+              <p className="font-medium text-terra">Payment was not completed.</p>
+              <p className="mt-1">
+                No worries — your registration is saved. Use the button below to try again, or pay manually via GCash / Maya.
+              </p>
+            </div>
+          )}
+
           {/* Status banner */}
           <div className="mb-8 text-center">
             <div className="mb-3 text-4xl">{isPaid || isFree ? "🌿" : "📩"}</div>
