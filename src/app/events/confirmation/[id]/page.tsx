@@ -14,8 +14,8 @@ interface ConfirmationPageProps {
 
 export default async function ConfirmationPage({ params, searchParams }: ConfirmationPageProps) {
   const { id } = await params;
-  const { payment } = await searchParams;
-  const paymentCancelled = payment === "cancelled";
+  const { payment: paymentParam } = await searchParams;
+  const paymentCancelled = paymentParam === "cancelled";
   const supabase = await createClient();
 
   const { data: registration } = await supabase
