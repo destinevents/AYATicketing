@@ -714,7 +714,7 @@ export default function LandingPage({ events = [], totalMembers = 0 }: LandingPa
                     <span className="event-seats">{seats}</span>
                     {isSoldOut
                       ? <span className="event-register" style={{ opacity: 0.5, cursor: 'default' }}>Sold Out</span>
-                      : <a href={`/events/${event.slug}/register`} className="event-register">Register Now</a>
+                      : <a href={`/events/${event.slug}`} className="event-register">Register Now</a>
                     }
                   </div>
                 </div>
