@@ -3,6 +3,58 @@
 import { useState, useEffect } from 'react';
 import '../styles/landing.css';
 
+interface EventTicket {
+  name: string;
+  price: number;
+  capacity: number;
+  sold: number;
+  status: string;
+}
+
+interface LiveEvent {
+  id: string;
+  title: string;
+  slug: string;
+  start_date: string;
+  end_date: string | null;
+  venue_name: string | null;
+  category: string;
+  event_tickets: EventTicket[];
+}
+
+interface LandingPageProps {
+  events?: LiveEvent[];
+  totalMembers?: number;
+}
+
+const CATEGORY_STYLES: Record<string, { gradient: string; emoji: string; tag: string }> = {
+  'sip-and-scale':   { gradient: 'linear-gradient(135deg,#1D2A1D,#3A6A3A)', emoji: '🍷', tag: "Sip & Scale" },
+  'rebloom':         { gradient: 'linear-gradient(135deg,#1D3028,#2D5C40)', emoji: '🌱', tag: "RE:BLOOM" },
+  'founder-session': { gradient: 'linear-gradient(135deg,#2B3228,#4E5C49)', emoji: '✨', tag: "Founder Session" },
+  'workshop':        { gradient: 'linear-gradient(135deg,#2A1D38,#6B4A8E)', emoji: '🎓', tag: "Workshop" },
+  'partner-event':   { gradient: 'linear-gradient(135deg,#2A1D1D,#8E4A4A)', emoji: '🤝', tag: "Partner Event" },
+  'other':           { gradient: 'linear-gradient(135deg,#1D2A3A,#2D5A8E)', emoji: '🌿', tag: "Community Event" },
+};
+
+function getLowestPrice(tickets: EventTicket[]): string {
+  const open = tickets.filter(t => t.status !== 'hidden' && t.status !== 'closed');
+  if (!open.length) return 'Check website';
+  const min = Math.min(...open.map(t => Number(t.price)));
+  return min === 0 ? 'Free' : `₱${min.toLocaleString()}`;
+}
+
+function getSeatsRemaining(tickets: EventTicket[]): string {
+  const open = tickets.filter(t => t.status !== 'hidden' && t.status !== 'closed');
+  if (!open.length) return 'Sold out';
+  const totalRemaining = open.reduce((sum, t) => {
+    if (t.capacity <= 0) return sum + 999;
+    return sum + Math.max(t.capacity - t.sold, 0);
+  }, 0);
+  if (totalRemaining >= 999) return 'Open to all';
+  if (totalRemaining === 0) return 'Sold out';
+  return `${totalRemaining} seat${totalRemaining !== 1 ? 's' : ''} remaining`;
+}
+
 const SME_DATA = [
   {
     name: 'Disenyo Digitals Collective',
@@ -99,7 +151,7 @@ const STUDENTS_UCCITCS = [
   { initial: 'J', name: 'Ja', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/Ja_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)' },
 ];
 
-export default function LandingPage() {
+export default function LandingPage({ events = [], totalMembers = 0 }: LandingPageProps) {
   const [navOpen, setNavOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'content-creators' | 'creatives'>('content-creators');
   const [smeSearch, setSmeSearch] = useState('');
@@ -170,12 +222,26 @@ export default function LandingPage() {
     setTimeout(() => setToastVisible(false), 3200);
   };
 
-  const handleJoin = () => {
+  const handleJoin = async () => {
     if (!joinName.trim()) { showToast('Please enter your name ✦'); return; }
     if (!joinEmail.trim() || !joinEmail.includes('@')) { showToast('Please enter a valid email ✦'); return; }
-    showToast(`Welcome to AYA, ${joinName.split(' ')[0]}! We'll be in touch. 🌿`);
-    setJoinName('');
-    setJoinEmail('');
+    try {
+      const res = await fetch('/api/join', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ full_name: joinName.trim(), email: joinEmail.trim(), join_type: selectedJoinType }),
+      });
+      if (res.ok) {
+        showToast(`Welcome to AYA, ${joinName.split(' ')[0]}! We'll be in touch. 🌿`);
+        setJoinName('');
+        setJoinEmail('');
+        setSelectedJoinType('');
+      } else {
+        showToast('Something went wrong — please try again.');
+      }
+    } catch {
+      showToast('Something went wrong — please try again.');
+    }
   };
 
   const filteredSmes = SME_DATA.filter((sme) => {
@@ -235,7 +301,7 @@ export default function LandingPage() {
             <div className="hero-stat-card">
               <div className="stat-row">
                 <div>
-                  <div className="stat-num">600<span style={{ fontSize: '1.8rem' }}>+</span></div>
+                  <div className="stat-num">{totalMembers > 0 ? totalMembers : '600'}<span style={{ fontSize: '1.8rem' }}>+</span></div>
                   <div className="stat-label">Community Members<br /><span className="stat-tag">Active & growing</span></div>
                 </div>
               </div>
@@ -616,66 +682,51 @@ export default function LandingPage() {
           </div>
 
           <div className="events-grid reveal">
-            <div className="event-card">
-              <div className="event-cover">
-                <div className="event-cover-bg" style={{ background: 'linear-gradient(135deg,#2B3228,#4E5C49)' }}>✨</div>
-                <div className="event-date-badge"><div className="day">21</div><div className="month">Jun</div></div>
+            {events.length > 0 ? events.map((event) => {
+              const style = CATEGORY_STYLES[event.category] ?? CATEGORY_STYLES['other'];
+              const date = new Date(event.start_date);
+              const day = date.toLocaleDateString('en-US', { day: 'numeric' });
+              const month = date.toLocaleDateString('en-US', { month: 'short' });
+              const timeStr = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+              const endDate = event.end_date ? new Date(event.end_date) : null;
+              const endTimeStr = endDate ? endDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }) : null;
+              const price = getLowestPrice(event.event_tickets ?? []);
+              const seats = getSeatsRemaining(event.event_tickets ?? []);
+              const isSoldOut = seats === 'Sold out';
+              return (
+                <div key={event.id} className="event-card">
+                  <div className="event-cover">
+                    <div className="event-cover-bg" style={{ background: style.gradient }}>{style.emoji}</div>
+                    <div className="event-date-badge"><div className="day">{day}</div><div className="month">{month}</div></div>
+                  </div>
+                  <div className="event-body">
+                    <div className="event-type-tag">{style.tag}</div>
+                    <div className="event-title">{event.title}</div>
+                    <div className="event-meta">🕐 {timeStr}{endTimeStr ? ` – ${endTimeStr}` : ''}</div>
+                    <div className="event-meta">📍 {event.venue_name ?? 'Baguio City'}</div>
+                    <div className="event-meta">🎫 {price}</div>
+                  </div>
+                  <div className="event-footer">
+                    <span className="event-seats">{seats}</span>
+                    {isSoldOut
+                      ? <span className="event-register" style={{ opacity: 0.5, cursor: 'default' }}>Sold Out</span>
+                      : <a href={`/events/${event.slug}/register`} className="event-register">Register Now</a>
+                    }
+                  </div>
+                </div>
+              );
+            }) : (
+              <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '3rem', color: 'rgba(240,237,230,0.4)', fontSize: '0.9rem' }}>
+                No upcoming events right now — check back soon!
               </div>
-              <div className="event-body">
-                <div className="event-type-tag">Builder's Circle</div>
-                <div className="event-title">AYA Builder's Circle — June Session</div>
-                <div className="event-meta">🕐 10:00 AM – 12:00 NN</div>
-                <div className="event-meta">📍 Café by the Ruins, Baguio City</div>
-                <div className="event-meta">🎫 ₱300 · Application-based</div>
-              </div>
-              <div className="event-footer">
-                <span className="event-seats">8 seats remaining</span>
-                <a href="/events/builders-circle-june-2026" className="event-register">Apply Now</a>
-              </div>
-            </div>
-
-            <div className="event-card">
-              <div className="event-cover">
-                <div className="event-cover-bg" style={{ background: 'linear-gradient(135deg,#1D2A1D,#3A6A3A)' }}>🍽️</div>
-                <div className="event-date-badge"><div className="day">28</div><div className="month">Jun</div></div>
-              </div>
-              <div className="event-body">
-                <div className="event-type-tag">Founder Dinner</div>
-                <div className="event-title">Sip & Scale Baguio — July Edition</div>
-                <div className="event-meta">🕐 6:30 PM – 9:30 PM</div>
-                <div className="event-meta">📍 Private Venue, Baguio</div>
-                <div className="event-meta">🎫 ₱800 · Curated · 20 seats</div>
-              </div>
-              <div className="event-footer">
-                <span className="event-seats">12 seats remaining</span>
-                <a href="/events" className="event-register">Apply Now</a>
-              </div>
-            </div>
-
-            <div className="event-card">
-              <div className="event-cover">
-                <div className="event-cover-bg" style={{ background: 'linear-gradient(135deg,#2A1D38,#6B4A8E)' }}>🎉</div>
-                <div className="event-date-badge"><div className="day">05</div><div className="month">Jul</div></div>
-              </div>
-              <div className="event-body">
-                <div className="event-type-tag">eMag Launch</div>
-                <div className="event-title">AYA eMagazine Vol. 1 Launch Party</div>
-                <div className="event-meta">🕐 5:00 PM – 8:00 PM</div>
-                <div className="event-meta">📍 Baguio City Arts Center</div>
-                <div className="event-meta">🎫 Free · RSVP required</div>
-              </div>
-              <div className="event-footer">
-                <span className="event-seats">Open to all</span>
-                <a href="/events" className="event-register">RSVP Free</a>
-              </div>
-            </div>
+            )}
           </div>
 
           <div style={{ textAlign: 'center', marginTop: '2.5rem' }} className="reveal">
             <p style={{ fontSize: '0.85rem', color: 'rgba(240,237,230,0.45)', marginBottom: '1rem' }}>
-              Powered by <strong style={{ color: 'rgba(240,237,230,0.65)' }}>Destine Events</strong> — Baguio's community experience engine
+              Powered by <strong style={{ color: 'rgba(240,237,230,0.65)' }}>Destine Events</strong> — Baguio&apos;s community experience engine
             </p>
-            <a href="https://destinevents.biz" target="_blank" rel="noopener noreferrer" className="btn-ghost">View All Events at DestinEvents.biz →</a>
+            <a href="/events" className="btn-ghost">View All Events →</a>
           </div>
         </div>
       </section>
