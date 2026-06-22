@@ -192,7 +192,9 @@ export default async function AdminDashboardPage() {
           <p className="mb-5 mt-0.5 text-xs text-pine/40">
             {totalRegistrations ?? 0} total · {confirmedRegistrations ?? 0} tickets sold
           </p>
-          <BarChart data={chartData} />
+          <div className="max-w-xs">
+            <BarChart data={chartData} />
+          </div>
         </div>
 
         {/* At a glance */}
