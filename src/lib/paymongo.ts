@@ -45,6 +45,7 @@ export async function createCheckoutSession({
               quantity: 1,
             },
           ],
+          description: `${name} — ${ticketName} · ${eventTitle}`,
           payment_method_types: ["gcash", "paymaya", "card", "qrph"],
           success_url: successUrl,
           cancel_url: cancelUrl,
