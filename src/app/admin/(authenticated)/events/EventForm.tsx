@@ -7,6 +7,8 @@ import { slugify } from "@/lib/utils";
 import type { EventCategory, EventRecord, EventStatus } from "@/lib/types";
 import { CATEGORY_LABELS } from "@/lib/types";
 
+// Note: event saves go through /api/admin/events (service role, bypasses RLS)
+
 interface EventFormProps {
   mode: "create" | "edit";
   initialEvent?: EventRecord;
@@ -29,6 +31,7 @@ export function EventForm({ mode, initialEvent }: EventFormProps) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [saved, setSaved] = useState(false);
 
   const [title, setTitle] = useState(initialEvent?.title ?? "");
   const [slug, setSlug] = useState(initialEvent?.slug ?? "");
@@ -134,6 +137,7 @@ export function EventForm({ mode, initialEvent }: EventFormProps) {
     e.preventDefault();
     setSaving(true);
     setError(null);
+    setSaved(false);
 
     const payload = {
       title,
@@ -155,24 +159,38 @@ export function EventForm({ mode, initialEvent }: EventFormProps) {
       faqs: faqs.filter((r) => r.question || r.answer),
     };
 
-    const supabase = createClient();
-
     if (mode === "create") {
-      const { data, error } = await supabase.from("events").insert(payload).select().single();
+      const res = await fetch("/api/admin/events", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const json = await res.json();
       setSaving(false);
-      if (error || !data) { setError(error?.message ?? "Could not create event."); return; }
-      router.push(`/admin/events/${data.id}/edit`);
+      if (!res.ok) { setError(json.error ?? "Could not create event."); return; }
+      router.push(`/admin/events/${json.data.id}/edit`);
       router.refresh();
     } else {
-      const { error } = await supabase.from("events").update(payload).eq("id", initialEvent!.id);
+      const res = await fetch(`/api/admin/events/${initialEvent!.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const json = await res.json();
       setSaving(false);
-      if (error) { setError(error.message); return; }
+      if (!res.ok) { setError(json.error ?? "Could not save event."); return; }
+      setSaved(true);
       router.refresh();
     }
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {saved && (
+        <div className="rounded-lg border border-moss/30 bg-moss/5 p-3 text-sm text-moss">
+          Changes saved successfully.
+        </div>
+      )}
       {error && (
         <div className="rounded-lg border border-terra/30 bg-terra/5 p-3 text-sm text-terra">{error}</div>
       )}
