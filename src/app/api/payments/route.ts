@@ -46,10 +46,18 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: error?.message ?? "Payment not found." }, { status: 500 });
     }
 
-    if (body.status === "paid") {
+    // Sync registration status to match payment status
+    const regStatusMap: Record<string, string> = {
+      paid: "confirmed",
+      pending: "pending",
+      cancelled: "cancelled",
+      refunded: "cancelled",
+    };
+    const newRegStatus = regStatusMap[body.status];
+
+    if (newRegStatus) {
       const admin = createAdminClient();
 
-      // Confirm the registration if it was pending
       const { data: registration } = await admin
         .from("registrations")
         .select("*")
@@ -59,24 +67,25 @@ export async function PATCH(request: Request) {
       if (registration) {
         let updatedRegistration = registration;
 
-        if (registration.status !== "confirmed") {
-          const { data: confirmed } = await admin
+        if (registration.status !== newRegStatus) {
+          const { data: synced } = await admin
             .from("registrations")
-            .update({ status: "confirmed" })
+            .update({ status: newRegStatus })
             .eq("id", registration.id)
             .select()
             .single();
-          if (confirmed) updatedRegistration = confirmed;
+          if (synced) updatedRegistration = synced;
         }
 
-        // Fetch event + ticket for the email
-        const [{ data: event }, { data: ticket }] = await Promise.all([
-          admin.from("events").select("*").eq("id", updatedRegistration.event_id).single(),
-          admin.from("event_tickets").select("*").eq("id", updatedRegistration.ticket_id).single(),
-        ]);
-
-        if (event && ticket) {
-          await sendPaymentConfirmedEmail(updatedRegistration, event, ticket);
+        // Send confirmation email only when paid
+        if (body.status === "paid") {
+          const [{ data: event }, { data: ticket }] = await Promise.all([
+            admin.from("events").select("*").eq("id", updatedRegistration.event_id).single(),
+            admin.from("event_tickets").select("*").eq("id", updatedRegistration.ticket_id).single(),
+          ]);
+          if (event && ticket) {
+            await sendPaymentConfirmedEmail(updatedRegistration, event, ticket);
+          }
         }
       }
     }

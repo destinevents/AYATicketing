@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import type { CommunityArchetype, PaymentStatus, RegistrationStatus } from "@/lib/types";
+import type { CommunityArchetype, PaymentStatus, RegistrationStatus } from "@/lib/types"; // RegistrationStatus used in RegStatusBadge
 import { ARCHETYPE_META } from "@/lib/types";
 import { formatCurrency, formatDate } from "@/lib/utils";
 
@@ -22,7 +22,20 @@ interface RegistrationRow {
 }
 
 const PAYMENT_STATUSES: PaymentStatus[] = ["pending", "paid", "cancelled", "refunded"];
-const REG_STATUSES: RegistrationStatus[] = ["pending", "confirmed", "cancelled", "waitlisted"];
+
+function RegStatusBadge({ status }: { status: RegistrationStatus }) {
+  const styles: Record<RegistrationStatus, string> = {
+    confirmed: "border-moss/30 bg-moss/10 text-moss",
+    pending: "border-gold/30 bg-gold/10 text-terra",
+    cancelled: "border-terra/20 bg-terra/5 text-terra",
+    waitlisted: "border-pine/20 bg-pine/5 text-muted",
+  };
+  return (
+    <span className={`inline-block rounded-full border px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-[0.08em] ${styles[status] ?? "border-pine/10 text-muted"}`}>
+      {status}
+    </span>
+  );
+}
 
 export function RegistrationsTable({ registrations }: { registrations: RegistrationRow[] }) {
   return (
@@ -56,14 +69,6 @@ function RegistrationRowItem({ reg }: { reg: RegistrationRow }) {
   const router = useRouter();
   const [updating, setUpdating] = useState(false);
   const payment = reg.payments?.[0];
-
-  async function updateRegStatus(status: RegistrationStatus) {
-    setUpdating(true);
-    const supabase = createClient();
-    await supabase.from("registrations").update({ status }).eq("id", reg.id);
-    setUpdating(false);
-    router.refresh();
-  }
 
   async function updatePaymentStatus(status: PaymentStatus) {
     if (!payment) return;
@@ -124,16 +129,7 @@ function RegistrationRowItem({ reg }: { reg: RegistrationRow }) {
         <div className="font-mono text-xs">{formatCurrency(reg.event_tickets?.price ?? 0)}</div>
       </td>
       <td className="px-5 py-3">
-        <select
-          value={reg.status}
-          disabled={updating}
-          onChange={(e) => updateRegStatus(e.target.value as RegistrationStatus)}
-          className="rounded-full border border-pine/10 bg-white px-2 py-1 font-mono text-[0.6rem] uppercase tracking-[0.08em] text-pine outline-none"
-        >
-          {REG_STATUSES.map((s) => (
-            <option key={s} value={s}>{s}</option>
-          ))}
-        </select>
+        <RegStatusBadge status={reg.status} />
       </td>
       <td className="px-5 py-3">
         {payment ? (
