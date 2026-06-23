@@ -70,10 +70,18 @@ function RegistrationRowItem({ reg }: { reg: RegistrationRow }) {
   const [updating, setUpdating] = useState(false);
   const payment = reg.payments?.[0];
 
+  const REG_STATUS_MAP: Record<PaymentStatus, RegistrationStatus> = {
+    paid: "confirmed",
+    pending: "pending",
+    cancelled: "cancelled",
+    refunded: "cancelled",
+  };
+
   async function updatePaymentStatus(status: PaymentStatus) {
     if (!payment) return;
     setUpdating(true);
     try {
+      // Update payment
       const res = await fetch("/api/payments", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -82,7 +90,15 @@ function RegistrationRowItem({ reg }: { reg: RegistrationRow }) {
       if (!res.ok) {
         const data = await res.json().catch(() => null);
         alert(data?.error ?? "Could not update payment status.");
+        setUpdating(false);
+        return;
       }
+      // Sync registration status via admin route (bypasses RLS)
+      await fetch("/api/admin/registrations", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ registration_id: reg.id, status: REG_STATUS_MAP[status] }),
+      });
     } catch {
       alert("Could not update payment status.");
     }
