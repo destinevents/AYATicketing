@@ -67,29 +67,38 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
             {event.subtitle && (
               <p className="max-w-2xl text-base leading-relaxed text-fog/70 md:text-lg">{event.subtitle}</p>
             )}
-            <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm">
-              <div>
-                <div className="font-mono text-[0.55rem] uppercase tracking-[0.14em] text-fog/45">Date</div>
-                <div className="mt-1">{formatDate(event.start_date)}</div>
+            {event.coming_soon ? (
+              <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-fog/20 bg-white/10 px-5 py-3">
+                <span className="h-2 w-2 animate-pulse rounded-full bg-gold" />
+                <span className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-fog/80">
+                  Coming Soon — watch for this space
+                </span>
               </div>
-              <div>
-                <div className="font-mono text-[0.55rem] uppercase tracking-[0.14em] text-fog/45">Time</div>
-                <div className="mt-1">
-                  {formatTime(event.start_date)}
-                  {event.end_date && ` – ${formatTime(event.end_date)}`}
-                </div>
-              </div>
-              <div>
-                <div className="font-mono text-[0.55rem] uppercase tracking-[0.14em] text-fog/45">Venue</div>
-                <div className="mt-1">{event.venue_name ?? "TBA"}</div>
-              </div>
-              {lowestPrice !== null && (
+            ) : (
+              <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm">
                 <div>
-                  <div className="font-mono text-[0.55rem] uppercase tracking-[0.14em] text-fog/45">Tickets</div>
-                  <div className="mt-1">{lowestPrice === 0 ? "Free" : `From ${formatCurrency(lowestPrice)}`}</div>
+                  <div className="font-mono text-[0.55rem] uppercase tracking-[0.14em] text-fog/45">Date</div>
+                  <div className="mt-1">{formatDate(event.start_date)}</div>
                 </div>
-              )}
-            </div>
+                <div>
+                  <div className="font-mono text-[0.55rem] uppercase tracking-[0.14em] text-fog/45">Time</div>
+                  <div className="mt-1">
+                    {formatTime(event.start_date)}
+                    {event.end_date && ` – ${formatTime(event.end_date)}`}
+                  </div>
+                </div>
+                <div>
+                  <div className="font-mono text-[0.55rem] uppercase tracking-[0.14em] text-fog/45">Venue</div>
+                  <div className="mt-1">{event.venue_name ?? "TBA"}</div>
+                </div>
+                {lowestPrice !== null && (
+                  <div>
+                    <div className="font-mono text-[0.55rem] uppercase tracking-[0.14em] text-fog/45">Tickets</div>
+                    <div className="mt-1">{lowestPrice === 0 ? "Free" : `From ${formatCurrency(lowestPrice)}`}</div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </section>
 
