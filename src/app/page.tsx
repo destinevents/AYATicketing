@@ -7,7 +7,7 @@ export const revalidate = 60;
 export default async function HomePage() {
   const supabase = await createClient();
 
-  const [{ data: events }, { count: totalMembers }] = await Promise.all([
+  const [{ data: events }, { count: totalMembers }, { data: partners }] = await Promise.all([
     supabase
       .from("events")
       .select("id, title, slug, start_date, end_date, venue_name, category, cover_image_url, event_tickets(name, price, capacity, sold, status)")
@@ -16,12 +16,13 @@ export default async function HomePage() {
       .order("start_date", { ascending: true })
       .limit(3),
     supabase.from("attendees").select("*", { count: "exact", head: true }),
+    supabase.from("partners").select("*").eq("is_active", true).order("sort_order", { ascending: true }),
   ]);
 
   return (
     <>
       <Navbar />
-      <LandingPage events={events ?? []} totalMembers={totalMembers ?? 0} />
+      <LandingPage events={events ?? []} totalMembers={totalMembers ?? 0} partners={partners ?? []} />
     </>
   );
 }

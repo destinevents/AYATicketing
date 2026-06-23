@@ -190,6 +190,22 @@ export interface PaymentRecord {
   updated_at: string;
 }
 
+export interface PartnerRecord {
+  id: string;
+  name: string;
+  category: string;
+  location: string;
+  location_label: string;
+  logo: string;
+  description: string;
+  tags: string[];
+  website: string;
+  is_active: boolean;
+  is_placeholder: boolean;
+  sort_order: number;
+  created_at: string;
+}
+
 export interface SponsorRecord {
   id: string;
   event_id: string | null;

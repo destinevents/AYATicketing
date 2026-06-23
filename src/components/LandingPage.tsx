@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import '../styles/landing.css';
+import type { PartnerRecord } from '@/lib/types';
 
 interface EventTicket {
   name: string;
@@ -26,7 +27,19 @@ interface LiveEvent {
 interface LandingPageProps {
   events?: LiveEvent[];
   totalMembers?: number;
+  partners?: PartnerRecord[];
 }
+
+const CATEGORY_LABELS: Record<string, string> = {
+  tech: 'Tech & Digital',
+  food: 'Food & Beverage',
+  agri: 'Agriculture & Organic',
+  events: 'Events & Hospitality',
+  education: 'Education',
+  creative: 'Creative Services',
+  retail: 'Retail & Fashion',
+  wellness: 'Wellness & Beauty',
+};
 
 const CATEGORY_STYLES: Record<string, { gradient: string; emoji: string; tag: string }> = {
   'sip-and-scale':   { gradient: 'linear-gradient(135deg,#1D2A1D,#3A6A3A)', emoji: '🍷', tag: "Sip & Scale" },
@@ -56,132 +69,6 @@ function getSeatsRemaining(tickets: EventTicket[]): string {
   return `${totalRemaining} seat${totalRemaining !== 1 ? 's' : ''} remaining`;
 }
 
-const SME_DATA = [
-  // ── Founding Partners ──
-  {
-    name: 'Disenyo Digitals Collective',
-    category: 'tech',
-    location: 'baguio city',
-    logo: '✦',
-    desc: 'Award-winning AI-powered digital tools and creative systems for Filipino SMEs. DOST-PCIEERD and DTI CAR awardee.',
-    tags: ['AI Tools', 'Digital', 'DOST Awardee'],
-    locationLabel: 'Baguio City',
-    link: 'https://disenyodigitals.com',
-    isComingSoon: false,
-  },
-  {
-    name: 'Destine Events',
-    category: 'events',
-    location: 'baguio city',
-    logo: '🎪',
-    desc: 'Experience and community engine behind Baguio\'s most intentional gatherings — from corporate summits to intimate founder dinners.',
-    tags: ['Events', 'Community', 'Corporate'],
-    locationLabel: 'Baguio City',
-    link: 'https://destinevents.biz',
-    isComingSoon: false,
-  },
-  {
-    name: "Claver's (C.A.M Food Products)",
-    category: 'food',
-    location: 'itogon',
-    logo: '🍞',
-    desc: 'Artisanal food products handcrafted in Bakun, Benguet. Proudly local, rooted in Cordillera tradition and community.',
-    tags: ['Food Products', 'Local', 'Benguet'],
-    locationLabel: 'Bakun, Benguet',
-    link: '#',
-    isComingSoon: false,
-  },
-  {
-    name: 'The Locale Farm',
-    category: 'agri',
-    location: 'la trinidad',
-    logo: '🌾',
-    desc: 'Farm-to-table produce from Camp Dangwa, La Trinidad. Supporting local Cordillera agriculture and sustainable food systems.',
-    tags: ['Farm', 'Local Produce', 'Benguet'],
-    locationLabel: 'La Trinidad, Benguet',
-    link: '#',
-    isComingSoon: false,
-  },
-  {
-    name: 'Session Groceries',
-    category: 'food',
-    location: 'session road',
-    logo: '🥬',
-    desc: 'Curated grocery and specialty food store championing local Baguio and Cordillera food producers. Fresh, local, and proudly Igorot.',
-    tags: ['Grocery', 'Local Produce', 'Cordillera'],
-    locationLabel: 'Session Road, Baguio City',
-    link: '#',
-    isComingSoon: false,
-  },
-  {
-    name: 'CarouselCraft',
-    category: 'tech',
-    location: 'baguio city',
-    logo: '🎠',
-    desc: 'Innovative technology and education solutions empowering creators and learners across the Cordillera region.',
-    tags: ['Technology', 'Education', 'Innovation'],
-    locationLabel: 'Baguio City',
-    link: '#',
-    isComingSoon: false,
-  },
-  {
-    name: 'Farmers and Entrepreneurs Academy',
-    category: 'education',
-    location: 'baguio city',
-    logo: '🌱',
-    desc: 'Bridging the gap between farming and entrepreneurship through practical education, mentorship, and community programs.',
-    tags: ['Education', 'Farming', 'Entrepreneurship'],
-    locationLabel: 'Baguio City',
-    link: '#',
-    isComingSoon: false,
-  },
-  // ── Community Directory Members ──
-  {
-    name: 'Baguio Central University',
-    category: 'education',
-    location: 'baguio city',
-    logo: '🎓',
-    desc: 'Premier institution in Baguio City providing quality higher education across multiple disciplines to the Cordillera community.',
-    tags: ['University', 'Education', 'Higher Learning'],
-    locationLabel: '18 Lower Bonifacio St, Baguio City',
-    link: '#',
-    isComingSoon: false,
-  },
-  {
-    name: 'Ching Art Studio',
-    category: 'creative',
-    location: 'baguio city',
-    logo: '🎨',
-    desc: 'Creative arts studio offering visual art services, workshops, and custom commissions in the heart of Baguio.',
-    tags: ['Creative Arts', 'Studio', 'Visual Art'],
-    locationLabel: '13 Leonard, Baguio City',
-    link: '#',
-    isComingSoon: false,
-  },
-  {
-    name: 'Turon Studio',
-    category: 'creative',
-    location: 'baguio city',
-    logo: '🎬',
-    desc: 'Full-service creative studio specializing in video production, photography, and social media content for Cordillera businesses.',
-    tags: ['Video Production', 'Photography', 'Social Media'],
-    locationLabel: 'Baguio City',
-    link: '#',
-    isComingSoon: false,
-  },
-  // ── Open slot ──
-  {
-    name: 'Founding Partner',
-    category: '',
-    location: '',
-    logo: '+',
-    desc: 'This slot is reserved for an AYA Founding Partner. Only 20 slots available at ₱2,500. Be featured in the SME Directory and eMagazine.',
-    tags: ['Claim Slot'],
-    locationLabel: 'Baguio City',
-    link: '#join',
-    isComingSoon: true,
-  },
-];
 
 const STUDENTS_UCBFA = Array.from({ length: 8 }, (_, i) => ({
   initial: 'S',
@@ -210,7 +97,7 @@ const STUDENTS_UCCITCS = [
   { initial: 'J', name: 'Ja', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/Ja_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)' },
 ];
 
-export default function LandingPage({ events = [], totalMembers = 0 }: LandingPageProps) {
+export default function LandingPage({ events = [], totalMembers = 0, partners = [] }: LandingPageProps) {
   const [activeTab, setActiveTab] = useState<'content-creators' | 'creatives'>('content-creators');
   const [smeSearch, setSmeSearch] = useState('');
   const [smeCategory, setSmeCategory] = useState('');
@@ -283,7 +170,7 @@ export default function LandingPage({ events = [], totalMembers = 0 }: LandingPa
     }
   };
 
-  const filteredSmes = SME_DATA.filter((sme) => {
+  const filteredSmes = partners.filter((sme) => {
     const q = smeSearch.toLowerCase();
     return (
       (!q || sme.name.toLowerCase().includes(q)) &&
@@ -597,26 +484,26 @@ export default function LandingPage({ events = [], totalMembers = 0 }: LandingPa
                 No businesses found. Try a different keyword or filter.
               </p>
             )}
-            {filteredSmes.map((sme, i) => (
-              <div key={i} className={`sme-card${sme.isComingSoon ? ' sme-coming' : ''}`}>
+            {filteredSmes.map((sme) => (
+              <div key={sme.id} className={`sme-card${sme.is_placeholder ? ' sme-coming' : ''}`}>
                 <div className="sme-card-header">
-                  <div className="sme-logo" style={sme.isComingSoon ? { opacity: 0.4 } : {}}>{sme.logo}</div>
+                  <div className="sme-logo" style={sme.is_placeholder ? { opacity: 0.4 } : {}}>{sme.logo}</div>
                   <div>
-                    <div className="sme-name" style={sme.isComingSoon ? { opacity: 0.55 } : {}}>{sme.name}</div>
-                    <div className="sme-category">{sme.isComingSoon ? 'Open Slot' : sme.category === 'tech' ? 'Tech & Digital' : sme.category === 'events' ? 'Events & Hospitality' : 'Food & Retail'}</div>
+                    <div className="sme-name" style={sme.is_placeholder ? { opacity: 0.55 } : {}}>{sme.name}</div>
+                    <div className="sme-category">{sme.is_placeholder ? 'Open Slot' : (CATEGORY_LABELS[sme.category] ?? sme.category)}</div>
                   </div>
                 </div>
-                <div className="sme-desc" style={sme.isComingSoon ? { opacity: 0.5, fontStyle: 'italic' } : {}}>{sme.desc}</div>
+                <div className="sme-desc" style={sme.is_placeholder ? { opacity: 0.5, fontStyle: 'italic' } : {}}>{sme.description}</div>
                 <div className="sme-tags">
                   {sme.tags.map((tag, j) => (
-                    <span key={j} className="sme-tag" style={sme.isComingSoon ? { opacity: 0.5 } : {}}>{tag}</span>
+                    <span key={j} className="sme-tag" style={sme.is_placeholder ? { opacity: 0.5 } : {}}>{tag}</span>
                   ))}
                 </div>
                 <div className="sme-footer">
-                  <span className="sme-location" style={sme.isComingSoon ? { opacity: 0.5 } : {}}>📍 {sme.locationLabel}</span>
-                  {sme.isComingSoon
+                  <span className="sme-location" style={sme.is_placeholder ? { opacity: 0.5 } : {}}>📍 {sme.location_label}</span>
+                  {sme.is_placeholder
                     ? <a href="#join" className="sme-link">Become a Partner →</a>
-                    : <a href={sme.link} target={sme.link.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" className="sme-link">Visit →</a>
+                    : <a href={sme.website} target={sme.website.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" className="sme-link">Visit →</a>
                   }
                 </div>
               </div>
