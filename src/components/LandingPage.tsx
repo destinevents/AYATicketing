@@ -21,6 +21,7 @@ interface LiveEvent {
   venue_name: string | null;
   category: string;
   cover_image_url?: string | null;
+  coming_soon?: boolean;
   event_tickets: EventTicket[];
 }
 
@@ -602,16 +603,33 @@ export default function LandingPage({ events = [], totalMembers = 0, partners = 
                   <div className="event-body">
                     <div className="event-type-tag">{style.tag}</div>
                     <div className="event-title">{event.title}</div>
-                    <div className="event-meta">🕐 {timeStr}{endTimeStr ? ` – ${endTimeStr}` : ''}</div>
-                    <div className="event-meta">📍 {event.venue_name ?? 'Baguio City'}</div>
-                    <div className="event-meta">🎫 {price}</div>
+                    {event.coming_soon ? (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.5rem' }}>
+                        <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#C9A84C', display: 'inline-block', animation: 'pulse 1.5s infinite' }} />
+                        <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.6rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#C9A84C' }}>
+                          Coming Soon — watch for this space
+                        </span>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="event-meta">🕐 {timeStr}{endTimeStr ? ` – ${endTimeStr}` : ''}</div>
+                        <div className="event-meta">📍 {event.venue_name ?? 'Baguio City'}</div>
+                        <div className="event-meta">🎫 {price}</div>
+                      </>
+                    )}
                   </div>
                   <div className="event-footer">
-                    <span className="event-seats">{seats}</span>
-                    {isSoldOut
-                      ? <span className="event-register" style={{ opacity: 0.5, cursor: 'default' }}>Sold Out</span>
-                      : <a href={`/events/${event.slug}`} className="event-register">Register Now</a>
-                    }
+                    {event.coming_soon ? (
+                      <span />
+                    ) : (
+                      <>
+                        <span className="event-seats">{seats}</span>
+                        {isSoldOut
+                          ? <span className="event-register" style={{ opacity: 0.5, cursor: 'default' }}>Sold Out</span>
+                          : <a href={`/events/${event.slug}`} className="event-register">Register Now</a>
+                        }
+                      </>
+                    )}
                   </div>
                 </div>
               );
