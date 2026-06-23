@@ -22,6 +22,7 @@ const NAV = [
   { href: "/admin/dashboard", label: "Dashboard" },
   { href: "/admin/events", label: "Events" },
   { href: "/admin/attendees", label: "Attendees" },
+  { href: "/admin/community", label: "Community Leads" },
   { href: "/admin/partners", label: "Partners" },
   { href: "/admin/email", label: "Email marketing" },
   { href: "/admin/promo", label: "Promo codes" },

@@ -11,12 +11,17 @@ const schema = z.object({
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { full_name, email } = schema.parse(body);
+    const { full_name, email, join_type } = schema.parse(body);
 
     const supabase = createAdminClient();
 
-    await supabase.from("attendees").upsert(
-      { full_name, email, newsletter_opt_in: true, first_seen_at: new Date().toISOString() },
+    await supabase.from("community_leads").upsert(
+      {
+        full_name,
+        email,
+        join_type: join_type || null,
+        joined_at: new Date().toISOString(),
+      },
       { onConflict: "email" }
     );
 
