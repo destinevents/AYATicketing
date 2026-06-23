@@ -91,8 +91,33 @@ export default async function EventsPage({ searchParams }: EventsPageProps) {
             {restEvents?.length === 1 ? "event" : "events"}
           </div>
 
-          {/* Grid */}
-          {restEvents && restEvents.length > 0 ? (
+          {/* Past events — video recaps */}
+          {time === "past" ? (
+            <div>
+              <div className="mb-8 font-mono text-[0.58rem] uppercase tracking-[0.18em] text-muted">Event Recaps</div>
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                {[
+                  { id: "1536600577899891", label: "AYA Builder's Circle — June Session" },
+                  { id: "3480520515446149", label: "AYA Event Recap" },
+                ].map((video) => (
+                  <div key={video.id} className="overflow-hidden rounded-xl border border-pine/10 bg-white shadow-sm">
+                    <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+                      <iframe
+                        src={`https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fwatch%2F%3Fv%3D${video.id}&show_text=false&width=640`}
+                        style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none" }}
+                        scrolling="no"
+                        frameBorder="0"
+                        allowFullScreen
+                        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                        title={video.label}
+                      />
+                    </div>
+                    <div className="px-4 py-3 font-mono text-[0.62rem] uppercase tracking-[0.1em] text-muted">{video.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : restEvents && restEvents.length > 0 ? (
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {restEvents.map((event) => (
                 <EventCard
@@ -104,9 +129,7 @@ export default async function EventsPage({ searchParams }: EventsPageProps) {
             </div>
           ) : (
             <div className="rounded-xl border border-dashed border-pine/15 bg-white/50 py-16 text-center text-sm text-muted">
-              {time === "upcoming"
-                ? "No upcoming events match your search right now — check back soon! 🌿"
-                : "No past events to show yet."}
+              No upcoming events match your search right now — check back soon! 🌿
             </div>
           )}
         </div>
