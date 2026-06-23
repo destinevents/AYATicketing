@@ -16,8 +16,16 @@ export function Navbar() {
   return (
     <nav className="sticky top-0 z-50 border-b border-fog/10 bg-pine-deep/95 backdrop-blur-md">
       <div className="flex h-[72px] w-full items-center px-6 md:px-10">
-        <Link href="/" className="font-display text-xl text-fog">
-          <em className="italic text-gold-light">As You Are</em> Baguio
+        <Link href="/" className="flex items-center gap-3">
+          <img
+            src="/images/logos/aya-baguio.jpg"
+            alt="AYA Baguio"
+            className="h-9 w-9 rounded-md object-contain"
+            style={{ background: 'transparent' }}
+          />
+          <span className="font-display text-xl text-fog">
+            <em className="italic text-gold-light">As You Are</em> Baguio
+          </span>
         </Link>
 
         {/* Desktop nav */}

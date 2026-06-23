@@ -689,7 +689,10 @@ export default function LandingPage({ events = [], totalMembers = 0, partners = 
       <footer className="site-footer">
         <div className="footer-inner">
           <div>
-            <div className="footer-brand"><em>As You Are</em> Baguio</div>
+            <div className="footer-brand" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+              <img src="/images/logos/aya-baguio.jpg" alt="AYA" style={{ width: '32px', height: '32px', borderRadius: '6px', objectFit: 'contain' }} />
+              <span><em>As You Are</em> Baguio</span>
+            </div>
             <div style={{ marginTop: '4px', fontSize: '0.72rem' }}>Community platform for creators & SMEs in Baguio City, Philippines</div>
           </div>
           <div className="footer-note">
