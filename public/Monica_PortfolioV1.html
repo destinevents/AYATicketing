@@ -3,186 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monica Creative Studio</title>
+    <title>Monica — AYA Baguio Creator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;1,300;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&family=Inter:wght@900&display=swap');
-
-        /* --- Color Palette & Variables --- */
-        :root {
-            --bg-main: #161513;
-            --text-muted: #8b8882;
-            --text-light: #ffffff;
-            --accent-color: #f7bb62;
-            --border-dark: #2a2825;
-            --font-mono: 'Courier Prime', monospace;
-            --font-sans: 'Inter', sans-serif;
-        }
-
-        /* --- Global Resets --- */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-muted);
-            font-family: var(--font-mono);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .highlight {
-            color: var(--accent-color);
-        }
-
-        /* --- Header Styles --- */
-        header {
-            border-bottom: 1px solid var(--border-dark);
-        }
-
-        .top-banner {
-            text-align: center;
-            padding: 1.2rem;
-            font-size: 0.9rem;
-            border-bottom: 1px solid var(--border-dark);
-            line-height: 1.8;
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 2.5rem;
-        }
-
-        .logo {
-            font-family: var(--font-sans);
-            font-size: 2.2rem;
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 900;
-            letter-spacing: 0.5px;
-        }
-
-        .logo-dot {
-            color: var(--accent-color);
-        }
-
-        .cta-btn {
-            background-color: var(--accent-color);
-            color: #000000;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            font-family: var(--font-mono);
-            font-weight: bold;
-            font-size: 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: opacity 0.2s ease;
-            display: inline-block;
-        }
-
-        .cta-btn:hover {
-            opacity: 0.85;
-        }
-
-        /* --- Main Content Area --- */
-        main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
-
-        /* --- Fallback Notice Styles --- */
-        .fallback-notice {
-            text-align: center;
-            padding: 2rem 1rem;
-            width: 100%;
-            background-color: #1a1816;
-            border-bottom: 1px solid var(--border-dark);
-        }
-
-        .fallback-notice p {
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-        }
-
-        /* --- Portfolio Embed Styles --- */
-        .portfolio-frame {
-            flex: 1;
-            width: 100%;
-            min-height: 80vh;
-            border: none;
-        }
-
-        /* --- Footer Styles --- */
-        footer {
-            padding: 1.5rem 2.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-            border-top: 1px solid var(--border-dark);
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        /* --- Responsive Design --- */
-        @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 1.5rem;
-                padding: 1.5rem;
-            }
-            
-            footer {
-                flex-direction: column;
-                text-align: center;
-                padding: 1.5rem;
-            }
-            
-            .top-banner {
-                padding: 1rem;
-            }
-        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --pine:#1B2B1B; --pine2:#243324; --gold:#C9A84C; --gold-l:#E2C97E; --fog:#F0EDE6; --muted:rgba(240,237,230,0.5); --border:rgba(240,237,230,0.08); }
+        html, body { height: 100%; }
+        body { background:var(--pine); color:var(--fog); font-family:'DM Sans',sans-serif; display:flex; flex-direction:column; min-height:100vh; }
+        .strip { background:var(--pine2); border-bottom:1px solid var(--border); text-align:center; padding:0.55rem 1rem; font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); }
+        .strip a { color:var(--gold); text-decoration:none; }
+        .strip a:hover { color:var(--gold-l); }
+        nav { display:flex; align-items:center; gap:1rem; padding:0 2rem; height:64px; border-bottom:1px solid var(--border); background:var(--pine); }
+        .nav-logo-img { width:32px; height:32px; border-radius:6px; object-fit:contain; flex-shrink:0; }
+        .nav-divider { width:1px; height:20px; background:var(--border); flex-shrink:0; }
+        .nav-name { font-family:'DM Mono',monospace; font-size:0.75rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--fog); }
+        .nav-name span { color:var(--gold); }
+        .nav-spacer { flex:1; }
+        .nav-open { font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+        .nav-open:hover { color:var(--fog); }
+        .nav-cta { background:var(--gold); color:var(--pine); border:none; padding:0.55rem 1.25rem; font-family:'DM Mono',monospace; font-size:0.6rem; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; border-radius:4px; text-decoration:none; transition:background 0.2s; white-space:nowrap; }
+        .nav-cta:hover { background:var(--gold-l); }
+        .frame-wrap { flex:1; display:flex; flex-direction:column; }
+        iframe { flex:1; width:100%; border:none; min-height:calc(100vh - 120px); }
+        footer { border-top:1px solid var(--border); padding:0.9rem 2rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; }
+        .footer-left { font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); }
+        .footer-right { font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.1em; color:var(--muted); }
+        .footer-right span { color:var(--gold); }
+        @media (max-width:600px) { nav { padding:0 1rem; gap:0.75rem; } .nav-open { display:none; } footer { flex-direction:column; text-align:center; padding:0.9rem 1rem; } }
     </style>
 </head>
 <body>
-
-    <header>
-        <div class="top-banner">
-            Featured creator under <span class="highlight">As You Are Baguio</span> — a 600+ member network of<br>
-            Baguio builders, creatives & changemakers
-        </div>
-        <div class="nav-container">
-            <a href="#" class="logo">MONICA<span class="logo-dot">.</span></a>
-            <a href="#" class="cta-btn">Work with Monica &rarr;</a>
-        </div>
-    </header>
-
-    <main>
-        <!-- Fallback section in case the iframe is blocked by browser settings -->
-        <div class="fallback-notice">
-            <p>If the embedded portfolio does not load below, please view it directly:</p>
-            <a href="https://www.destinevents.biz/asyouarebaguio/community-monicajoy" target="_blank" class="cta-btn">Open Portfolio in New Tab</a>
-        </div>
-
-        <!-- The iframe using Monica's link -->
-        <iframe src="https://www.destinevents.biz/asyouarebaguio/community-monicajoy" class="portfolio-frame" title="Monica Portfolio" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
-    </main>
-
+    <div class="strip">Featured creator under <a href="/">As You Are Baguio</a> — Baguio builders, creatives &amp; changemakers</div>
+    <nav>
+        <img src="/images/logos/aya-baguio.jpg" alt="AYA Baguio" class="nav-logo-img">
+        <div class="nav-divider"></div>
+        <div class="nav-name">MONICA<span>.</span></div>
+        <div class="nav-spacer"></div>
+        <a href="https://www.destinevents.biz/asyouarebaguio/community-monicajoy" target="_blank" rel="noopener noreferrer" class="nav-open">Open full page ↗</a>
+        <a href="https://www.destinevents.biz/asyouarebaguio/community-monicajoy" target="_blank" rel="noopener noreferrer" class="nav-cta">Work with Monica →</a>
+    </nav>
+    <div class="frame-wrap">
+        <iframe src="https://www.destinevents.biz/asyouarebaguio/community-monicajoy" title="Monica Portfolio" allowfullscreen allow="fullscreen"></iframe>
+    </div>
     <footer>
-        <div>MONICA Creative Studio · Portfolio</div>
-        <div>
-            Featured by <span class="highlight">As You Are Baguio</span> · Co-hosted by Destine Events · Website powered by <span class="highlight">Disenyo Digitals</span>
-        </div>
+        <div class="footer-left">Monica · Portfolio</div>
+        <div class="footer-right">Featured by <span>As You Are Baguio</span> · Powered by <span>Disenyo Digitals</span></div>
     </footer>
-
 </body>
 </html>

@@ -3,301 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Josh Creative Studio</title>
+    <title>Josh — AYA Baguio Creator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&family=Inter:wght@900&display=swap');
-
-        /* --- Color Palette & Variables --- */
-        :root {
-            --bg-main: #161513;
-            --text-muted: #8b8882;
-            --text-light: #ffffff;
-            --accent-color: #f7bb62;
-            --border-dark: #2a2825;
-            --font-mono: 'Courier Prime', monospace;
-            --font-sans: 'Inter', sans-serif;
-        }
-
-        /* --- Global Resets --- */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-muted);
-            font-family: var(--font-mono);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .highlight {
-            color: var(--accent-color);
-        }
-
-        /* --- Header Styles --- */
-        header {
-            border-bottom: 1px solid var(--border-dark);
-        }
-
-        .top-banner {
-            text-align: center;
-            padding: 1.2rem;
-            font-size: 0.9rem;
-            border-bottom: 1px solid var(--border-dark);
-            line-height: 1.8;
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 2.5rem;
-        }
-
-        .logo {
-            font-family: var(--font-sans);
-            font-size: 2.2rem;
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 900;
-            letter-spacing: 0.5px;
-        }
-
-        .logo-dot {
-            color: var(--accent-color);
-        }
-
-        .cta-btn {
-            background-color: var(--accent-color);
-            color: #000000;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            font-family: var(--font-mono);
-            font-weight: bold;
-            font-size: 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: opacity 0.2s ease;
-            display: inline-block;
-        }
-
-        .cta-btn:hover {
-            opacity: 0.85;
-        }
-
-        /* --- Main Content Area --- */
-        main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            background-color: #000000; 
-        }
-
-        /* --- Fallback Notice Styles --- */
-        .fallback-notice {
-            text-align: center;
-            padding: 2rem 1rem;
-            width: 100%;
-            background-color: #1a1816;
-            border-bottom: 1px solid var(--border-dark);
-        }
-
-        .fallback-notice p {
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-        }
-
-        /* --- Portfolio Image Carousel Styles --- */
-        .portfolio-image-container {
-            position: relative;
-            width: 100%;
-            max-width: 900px; /* Constrained slightly for better resume readability */
-            margin: 0 auto;
-            padding: 2rem 1rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .portfolio-image {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            background-color: #fff; /* Ensures transparent parts of the resume have a white background */
-        }
-
-        .nav-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: var(--accent-color);
-            color: #000000;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0.8;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            z-index: 10;
-        }
-
-        .nav-arrow:hover {
-            opacity: 1;
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .prev-arrow {
-            left: 20px;
-        }
-
-        .next-arrow {
-            right: 20px;
-        }
-
-        .page-indicator {
-            text-align: center;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            font-size: 0.9rem;
-        }
-
-        /* --- Footer Styles --- */
-        footer {
-            padding: 1.5rem 2.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-            border-top: 1px solid var(--border-dark);
-            flex-wrap: wrap;
-            gap: 1rem;
-            background-color: var(--bg-main);
-        }
-
-        /* --- Responsive Design --- */
-        @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 1.5rem;
-                padding: 1.5rem;
-            }
-            
-            footer {
-                flex-direction: column;
-                text-align: center;
-                padding: 1.5rem;
-            }
-            
-            .top-banner {
-                padding: 1rem;
-            }
-            
-            .portfolio-image-container {
-                padding: 1rem 0;
-            }
-            
-            .portfolio-image {
-                border-radius: 0;
-            }
-
-            .nav-arrow {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-            }
-
-            .prev-arrow {
-                left: 10px;
-            }
-
-            .next-arrow {
-                right: 10px;
-            }
-        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --pine:#1B2B1B; --pine2:#243324; --gold:#C9A84C; --gold-l:#E2C97E; --fog:#F0EDE6; --muted:rgba(240,237,230,0.5); --border:rgba(240,237,230,0.08); }
+        html, body { height: 100%; }
+        body { background:var(--pine); color:var(--fog); font-family:'DM Sans',sans-serif; display:flex; flex-direction:column; min-height:100vh; }
+        .strip { background:var(--pine2); border-bottom:1px solid var(--border); text-align:center; padding:0.55rem 1rem; font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); }
+        .strip a { color:var(--gold); text-decoration:none; }
+        nav { display:flex; align-items:center; gap:1rem; padding:0 2rem; height:64px; border-bottom:1px solid var(--border); background:var(--pine); }
+        .nav-logo-img { width:32px; height:32px; border-radius:6px; object-fit:contain; flex-shrink:0; }
+        .nav-divider { width:1px; height:20px; background:var(--border); flex-shrink:0; }
+        .nav-name { font-family:'DM Mono',monospace; font-size:0.75rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--fog); }
+        .nav-name span { color:var(--gold); }
+        .nav-spacer { flex:1; }
+        .nav-cta { background:var(--gold); color:var(--pine); border:none; padding:0.55rem 1.25rem; font-family:'DM Mono',monospace; font-size:0.6rem; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; border-radius:4px; text-decoration:none; transition:background 0.2s; white-space:nowrap; }
+        .nav-cta:hover { background:var(--gold-l); }
+        .coming-soon { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem; padding:4rem 2rem; text-align:center; }
+        .coming-soon-dot { width:8px; height:8px; border-radius:50%; background:var(--gold); animation:pulse 1.5s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+        .coming-soon-label { font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); }
+        .coming-soon-name { font-size:1.5rem; color:var(--fog); }
+        footer { border-top:1px solid var(--border); padding:0.9rem 2rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; }
+        .footer-left { font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); }
+        .footer-right { font-family:'DM Mono',monospace; font-size:0.58rem; color:var(--muted); }
+        .footer-right span { color:var(--gold); }
+        @media (max-width:600px) { nav { padding:0 1rem; gap:0.75rem; } footer { flex-direction:column; text-align:center; } }
     </style>
 </head>
 <body>
-
-    <header>
-        <div class="top-banner">
-            Featured creator under <span class="highlight">As You Are Baguio</span> — a 600+ member network of<br>
-            Baguio builders, creatives & changemakers
-        </div>
-        <div class="nav-container">
-            <a href="#" class="logo">JOSH<span class="logo-dot">.</span></a>
-            <a href="#" class="cta-btn">Work with Josh &rarr;</a>
-        </div>
-    </header>
-
-    <main>
-        <!-- Fallback section -->
-        <div class="fallback-notice">
-            <p>If the portfolio image does not load below, please view the pages directly:</p>
-            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                <a href="3fb6a4cb-d0b1-40f8-ab5d-53bc14c33d36.jpg" target="_blank" class="cta-btn" style="padding: 0.5rem 1rem; font-size: 0.85rem;">View Page 1</a>
-                <a href="2dbd93c5-d5cf-44a4-aba4-fbd1c035ea52.jpg" target="_blank" class="cta-btn" style="padding: 0.5rem 1rem; font-size: 0.85rem;">View Page 2</a>
-            </div>
-        </div>
-
-        <!-- The Image Carousel Embed -->
-        <div class="portfolio-image-container">
-            <button class="nav-arrow prev-arrow" onclick="prevImage()">&#10094;</button>
-            <img src="3fb6a4cb-d0b1-40f8-ab5d-53bc14c33d36.jpg" id="portfolio-img" alt="Josh Portfolio Page" class="portfolio-image">
-            <button class="nav-arrow next-arrow" onclick="nextImage()">&#10095;</button>
-        </div>
-        <div class="page-indicator" id="page-indicator-text">Page 1 of 2</div>
-    </main>
-
+    <div class="strip">Featured creator under <a href="/">As You Are Baguio</a> — Baguio builders, creatives &amp; changemakers</div>
+    <nav>
+        <img src="/images/logos/aya-baguio.jpg" alt="AYA Baguio" class="nav-logo-img">
+        <div class="nav-divider"></div>
+        <div class="nav-name">JOSH<span>.</span></div>
+        <div class="nav-spacer"></div>
+        <a href="#" class="nav-cta">Work with Josh →</a>
+    </nav>
+    <div class="coming-soon">
+        <div class="coming-soon-dot"></div>
+        <div class="coming-soon-label">Portfolio coming soon</div>
+        <div class="coming-soon-name">Josh's portfolio is being prepared.</div>
+    </div>
     <footer>
-        <div>JOSH Creative Studio · Portfolio</div>
-        <div>
-            Featured by <span class="highlight">As You Are Baguio</span> · Co-hosted by Destine Events · Website powered by <span class="highlight">Disenyo Digitals</span>
-        </div>
+        <div class="footer-left">Josh · Portfolio</div>
+        <div class="footer-right">Featured by <span>As You Are Baguio</span> · Powered by <span>Disenyo Digitals</span></div>
     </footer>
-
-    <!-- JavaScript to handle flipping the pages -->
-    <script>
-        // Array containing the exact file names provided
-        const images = [
-            "3fb6a4cb-d0b1-40f8-ab5d-53bc14c33d36.jpg", // Page 1 (Main info)
-            "2dbd93c5-d5cf-44a4-aba4-fbd1c035ea52.jpg"  // Page 2 (Certifications)
-        ];
-        
-        let currentIndex = 0;
-        const imgElement = document.getElementById("portfolio-img");
-        const indicatorText = document.getElementById("page-indicator-text");
-
-        function updateDisplay() {
-            imgElement.src = images[currentIndex];
-            indicatorText.innerText = `Page ${currentIndex + 1} of ${images.length}`;
-        }
-
-        function nextImage() {
-            currentIndex = (currentIndex + 1) % images.length;
-            updateDisplay();
-        }
-
-        function prevImage() {
-            currentIndex = (currentIndex - 1 + images.length) % images.length;
-            updateDisplay();
-        }
-    </script>
-
 </body>
 </html>
