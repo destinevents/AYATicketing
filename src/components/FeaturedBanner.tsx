@@ -40,27 +40,38 @@ export function FeaturedBanner({ event, tickets = [] }: FeaturedBannerProps) {
               {event.subtitle}
             </p>
           )}
-          <div className="mb-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-fog/70">
-            <span className="flex items-center gap-2">
-              📅 {formatDate(event.start_date, { month: "long", day: "numeric", year: "numeric" })}
-            </span>
-            <span className="flex items-center gap-2">🕐 {formatTime(event.start_date)}</span>
-            <span className="flex items-center gap-2">📍 {event.venue_name ?? "Venue TBA"}</span>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <Link
-              href={`/events/${event.slug}`}
-              className="rounded-sm bg-gold px-7 py-3 font-mono text-[0.65rem] uppercase tracking-[0.18em] text-pine-deep transition-colors hover:bg-gold-light"
-            >
-              View Details
-            </Link>
-            <Link
-              href={`/events/${event.slug}/register`}
-              className="rounded-sm border border-fog/25 px-7 py-3 font-mono text-[0.65rem] uppercase tracking-[0.18em] text-fog/75 transition-colors hover:border-fog/60 hover:text-fog"
-            >
-              Get Tickets {lowestPrice !== null && `· ${lowestPrice === 0 ? "Free" : `from ${formatCurrency(lowestPrice)}`}`}
-            </Link>
-          </div>
+          {(event as any).coming_soon ? (
+            <div className="mb-6 flex items-center gap-2">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-gold" />
+              <span className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-gold-light">
+                Coming Soon — watch for this space
+              </span>
+            </div>
+          ) : (
+            <>
+              <div className="mb-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-fog/70">
+                <span className="flex items-center gap-2">
+                  📅 {formatDate(event.start_date, { month: "long", day: "numeric", year: "numeric" })}
+                </span>
+                <span className="flex items-center gap-2">🕐 {formatTime(event.start_date)}</span>
+                <span className="flex items-center gap-2">📍 {event.venue_name ?? "Venue TBA"}</span>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  href={`/events/${event.slug}`}
+                  className="rounded-sm bg-gold px-7 py-3 font-mono text-[0.65rem] uppercase tracking-[0.18em] text-pine-deep transition-colors hover:bg-gold-light"
+                >
+                  View Details
+                </Link>
+                <Link
+                  href={`/events/${event.slug}/register`}
+                  className="rounded-sm border border-fog/25 px-7 py-3 font-mono text-[0.65rem] uppercase tracking-[0.18em] text-fog/75 transition-colors hover:border-fog/60 hover:text-fog"
+                >
+                  Get Tickets {lowestPrice !== null && `· ${lowestPrice === 0 ? "Free" : `from ${formatCurrency(lowestPrice)}`}`}
+                </Link>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
