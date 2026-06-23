@@ -541,7 +541,7 @@ export default function LandingPage({ events = [], totalMembers = 0, partners = 
                     <img src="/images/logos/aya-magazine-cover.png" alt="Vol. 1 Issue 1" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                   </div>
                   <div>
-                    <div className="past-issue-title">The Sip & Scale Launch Edition</div>
+                    <div className="past-issue-title">The Launch Edition</div>
                     <div className="past-issue-date">June 2026 · Vol. 1 Issue 1</div>
                   </div>
                 </a>

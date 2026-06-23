@@ -63,8 +63,8 @@ export default async function EventsPage({ searchParams }: EventsPageProps) {
               Where the <em className="italic text-gold-light">community</em> gathers
             </h1>
             <p className="mt-4 max-w-xl text-sm leading-relaxed text-fog/60 md:text-base">
-              From Sip & Scale founder dinners to RE:BLOOM sustainability showcases — every
-              AYA event in one place. Browse, register, and get your QR ticket instantly.
+              From founder dinners to sustainability showcases — every AYA event in one place.
+              Browse, register, and get your QR ticket instantly.
             </p>
           </div>
         </section>

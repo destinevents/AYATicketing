@@ -24,7 +24,7 @@ const dmMono = DM_Mono({
 export const metadata: Metadata = {
   title: "AYA Events Hub — As You Are Baguio",
   description:
-    "Centralized event management & ticketing for the As You Are Baguio community — Sip & Scale, RE:BLOOM, Founder Sessions, Workshops, and more.",
+    "Centralized event management & ticketing for the As You Are Baguio community — RE:BLOOM, Founder Sessions, Workshops, and more.",
 };
 
 export default function RootLayout({
