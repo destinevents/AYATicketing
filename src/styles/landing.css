@@ -799,7 +799,7 @@ h2.section-title-light em {
 .cohort-tag { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; background: rgba(43,50,40,0.1); color: var(--pine); border: 1px solid rgba(43,50,40,0.2); }
 .cohort-title { font-size: 0.9rem; color: var(--pine); font-weight: 500; }
 .cohort-count { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); margin-left: auto; }
-.student-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 0.5rem; }
+.student-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 0.5rem; align-items: stretch; }
 .student-card {
   background: #fff;
   border: 1px solid var(--border-fog);
@@ -807,16 +807,20 @@ h2.section-title-light em {
   padding: 18px 14px;
   text-align: center;
   transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .student-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(43,50,40,0.09); }
-.student-avatar { width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 1.2rem; color: var(--fog); font-weight: 400; }
+.student-avatar { width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 12px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 1.2rem; color: var(--fog); font-weight: 400; }
 .student-avatar-photo { object-fit: cover; border: 2px solid var(--border-fog); }
-.student-name { font-family: 'Fraunces', serif; font-size: 0.95rem; font-weight: 400; color: var(--pine); margin-bottom: 3px; }
-.student-school { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 3px; }
+.student-name { font-family: 'Fraunces', serif; font-size: 0.95rem; font-weight: 400; color: var(--pine); margin-bottom: 6px; min-height: 3.6em; display: flex; align-items: center; justify-content: center; width: 100%; }
+.student-school { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
 .student-role { font-size: 0.7rem; color: var(--muted); }
 .student-profile-btn {
   display: block;
-  margin-top: 12px;
+  width: 100%;
+  margin-top: auto;
   padding: 7px 0;
   background: var(--fog-warm);
   border: 1px solid var(--border-fog);
@@ -829,6 +833,12 @@ h2.section-title-light em {
   transition: all 0.2s;
 }
 .student-profile-btn:hover { background: var(--pine); border-color: var(--pine); color: var(--fog); }
+@media (max-width: 600px) {
+  .student-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 380px) {
+  .student-grid { grid-template-columns: 1fr; }
+}
 
 /* ─────────────────────────────────────────────
    RESPONSIVE
