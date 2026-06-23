@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { generateQrDataUrl } from "@/lib/qrcode";
 import { formatCurrency, formatDate, formatTime } from "@/lib/utils";
 import { PayNowButton } from "@/components/PayNowButton";
+import { CancelRegistrationButton } from "@/components/CancelRegistrationButton";
 
 interface ConfirmationPageProps {
   params: Promise<{ id: string }>;
@@ -120,6 +121,10 @@ export default async function ConfirmationPage({ params, searchParams }: Confirm
               </p>
 
               <PayNowButton registrationId={registration.id} />
+              <CancelRegistrationButton
+                registrationId={registration.id}
+                eventSlug={event?.slug ?? ""}
+              />
 
               <details className="group">
                 <summary className="cursor-pointer list-none font-mono text-[0.6rem] uppercase tracking-[0.12em] text-terra">
