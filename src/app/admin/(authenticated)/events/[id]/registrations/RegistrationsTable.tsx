@@ -70,6 +70,10 @@ function RegistrationRowItem({ reg }: { reg: RegistrationRow }) {
   const [updating, setUpdating] = useState(false);
   const payment = reg.payments?.[0];
 
+  // Local state for instant UI updates (optimistic)
+  const [regStatus, setRegStatus] = useState<RegistrationStatus>(reg.status);
+  const [payStatus, setPayStatus] = useState<PaymentStatus>(payment?.status ?? "pending");
+
   const REG_STATUS_MAP: Record<PaymentStatus, RegistrationStatus> = {
     paid: "confirmed",
     pending: "pending",
@@ -80,8 +84,10 @@ function RegistrationRowItem({ reg }: { reg: RegistrationRow }) {
   async function updatePaymentStatus(status: PaymentStatus) {
     if (!payment) return;
     setUpdating(true);
+    // Optimistically update UI immediately
+    setPayStatus(status);
+    setRegStatus(REG_STATUS_MAP[status]);
     try {
-      // Update payment
       const res = await fetch("/api/payments", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -90,10 +96,13 @@ function RegistrationRowItem({ reg }: { reg: RegistrationRow }) {
       if (!res.ok) {
         const data = await res.json().catch(() => null);
         alert(data?.error ?? "Could not update payment status.");
+        // Revert on failure
+        setPayStatus(payment.status);
+        setRegStatus(reg.status);
         setUpdating(false);
         return;
       }
-      // Sync registration status via admin route (bypasses RLS)
+      // Also sync in DB via admin route (bypasses RLS)
       await fetch("/api/admin/registrations", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -101,6 +110,8 @@ function RegistrationRowItem({ reg }: { reg: RegistrationRow }) {
       });
     } catch {
       alert("Could not update payment status.");
+      setPayStatus(payment.status);
+      setRegStatus(reg.status);
     }
     setUpdating(false);
     router.refresh();
@@ -145,18 +156,18 @@ function RegistrationRowItem({ reg }: { reg: RegistrationRow }) {
         <div className="font-mono text-xs">{formatCurrency(reg.event_tickets?.price ?? 0)}</div>
       </td>
       <td className="px-5 py-3">
-        <RegStatusBadge status={reg.status} />
+        <RegStatusBadge status={regStatus} />
       </td>
       <td className="px-5 py-3">
         {payment ? (
           <select
-            value={payment.status}
+            value={payStatus}
             disabled={updating}
             onChange={(e) => updatePaymentStatus(e.target.value as PaymentStatus)}
             className={`rounded-full border px-2 py-1 font-mono text-[0.6rem] uppercase tracking-[0.08em] outline-none ${
-              payment.status === "paid"
+              payStatus === "paid"
                 ? "border-moss/30 bg-moss/10 text-moss"
-                : payment.status === "pending"
+                : payStatus === "pending"
                 ? "border-gold/30 bg-gold/10 text-terra"
                 : "border-terra/20 bg-terra/5 text-terra"
             }`}
