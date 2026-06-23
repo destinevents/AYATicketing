@@ -79,14 +79,6 @@ const STUDENTS_UCBFA = Array.from({ length: 8 }, (_, i) => ({
   gradient: 'linear-gradient(135deg,#2B3228,#4E5C49)',
 }));
 
-const STUDENTS_UBIT = Array.from({ length: 7 }, (_, i) => ({
-  initial: 'S',
-  name: `Student ${i + 1}`,
-  school: 'UB IT',
-  role: 'Intern · Batch 2026',
-  link: '#',
-  gradient: 'linear-gradient(135deg,#1D2A3A,#2D5A8E)',
-}));
 
 const STUDENTS_UCCITCS = [
   { initial: 'M', name: 'Mary Keirstin Marziel Itliong Ante', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/Kei_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
@@ -405,23 +397,6 @@ export default function LandingPage({ events = [], totalMembers = 0, partners = 
                 ))}
               </div>
 
-              {/* UB IT */}
-              <div className="cohort-header reveal" style={{ marginTop: '2.5rem' }}>
-                <div className="cohort-tag" style={{ background: 'rgba(44,90,142,0.15)', color: '#2d5a8e', borderColor: 'rgba(44,90,142,0.3)' }}>UB IT</div>
-                <div className="cohort-title">University of Baguio — Information Technology</div>
-                <div className="cohort-count">7 Students</div>
-              </div>
-              <div className="student-grid reveal">
-                {STUDENTS_UBIT.map((s, i) => (
-                  <div key={i} className="student-card">
-                    <div className="student-avatar" style={{ background: s.gradient }}>{s.initial}</div>
-                    <div className="student-name">{s.name}</div>
-                    <div className="student-school">{s.school}</div>
-                    <div className="student-role">{s.role}</div>
-                    <a href={s.link} className="student-profile-btn">View Profile</a>
-                  </div>
-                ))}
-              </div>
 
               <div className="get-featured-strip reveal" style={{ marginTop: '2.5rem' }}>
                 <div>
