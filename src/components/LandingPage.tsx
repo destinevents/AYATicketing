@@ -680,27 +680,15 @@ export default function LandingPage({ events = [], totalMembers = 0, partners = 
             ))}
           </div>
 
-          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '1rem' }}>
-            <input
-              type="text"
-              placeholder="Your full name"
-              value={joinName}
-              onChange={(e) => setJoinName(e.target.value)}
-              className="search-input-dark"
-              style={{ flex: 1, minWidth: '200px', padding: '13px 18px', border: '1px solid rgba(240,237,230,0.2)', borderRadius: '4px', background: 'rgba(255,255,255,0.06)', color: 'var(--fog)', fontFamily: "'DM Sans', sans-serif", fontSize: '0.88rem', outline: 'none' }}
-            />
-            <input
-              type="email"
-              placeholder="Your email address"
-              value={joinEmail}
-              onChange={(e) => setJoinEmail(e.target.value)}
-              className="search-input-dark"
-              style={{ flex: 1, minWidth: '200px', padding: '13px 18px', border: '1px solid rgba(240,237,230,0.2)', borderRadius: '4px', background: 'rgba(255,255,255,0.06)', color: 'var(--fog)', fontFamily: "'DM Sans', sans-serif", fontSize: '0.88rem', outline: 'none' }}
-            />
-          </div>
-          <button className="btn-primary" onClick={handleJoin} style={{ width: '100%', maxWidth: '340px', padding: '16px', fontSize: '0.68rem' }}>
-            Join the AYA Community →
-          </button>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfHvtmeetoMN_3SBmUpJWoKCetd2qUUhc9ZasARuoI5_4HUrA/viewform"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary"
+            style={{ display: 'inline-block', width: '100%', maxWidth: '340px', padding: '16px', fontSize: '0.68rem', textAlign: 'center', textDecoration: 'none' }}
+          >
+            Fill Out the Form →
+          </a>
           <p style={{ fontSize: '0.75rem', color: 'rgba(240,237,230,0.3)', marginTop: '1rem' }}>Free to join. Rooted in faith, authenticity & community. ✦</p>
         </div>
       </section>

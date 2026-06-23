@@ -39,12 +39,14 @@ export function Navbar() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/#join"
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfHvtmeetoMN_3SBmUpJWoKCetd2qUUhc9ZasARuoI5_4HUrA/viewform"
+            target="_blank"
+            rel="noopener noreferrer"
             className="rounded-sm bg-gold px-6 py-2 font-mono text-[0.65rem] font-medium uppercase tracking-[0.14em] text-pine-deep transition-colors hover:bg-gold-light"
           >
             Join Community
-          </Link>
+          </a>
         </div>
 
         {/* Mobile hamburger */}
@@ -73,13 +75,15 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/#join"
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfHvtmeetoMN_3SBmUpJWoKCetd2qUUhc9ZasARuoI5_4HUrA/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setOpen(false)}
               className="mt-2 rounded-sm bg-gold px-6 py-3 text-center font-mono text-[0.65rem] font-medium uppercase tracking-[0.14em] text-pine-deep transition-colors hover:bg-gold-light"
             >
               Join Community
-            </Link>
+            </a>
           </div>
         </div>
       )}
