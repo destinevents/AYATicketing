@@ -56,21 +56,32 @@ export function EventCard({ event, tickets = [] }: EventCardProps) {
         {event.subtitle && (
           <p className="mb-3 line-clamp-2 text-sm leading-relaxed text-muted">{event.subtitle}</p>
         )}
-        <div className="flex items-center justify-between border-t border-pine/10 pt-3 text-xs text-muted">
-          <span className="flex items-center gap-1">
-            📍 {event.venue_name ?? "TBA"}
-          </span>
-          {lowestPrice !== null && (
-            <span className="font-mono font-medium text-pine">
-              {lowestPrice === 0 ? "Free" : `From ${formatCurrency(lowestPrice)}`}
+        {(event as any).coming_soon ? (
+          <div className="mt-3 flex items-center gap-2 border-t border-pine/10 pt-3">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-gold" />
+            <span className="font-mono text-[0.6rem] uppercase tracking-[0.14em] text-terra">
+              Coming Soon — watch for this space
             </span>
-          )}
-        </div>
-        <div className="mt-4">
-          <span className="block w-full rounded-sm bg-gold py-2.5 text-center font-mono text-[0.6rem] uppercase tracking-[0.16em] text-pine-deep transition-colors group-hover:bg-gold-light">
-            Register Now →
-          </span>
-        </div>
+          </div>
+        ) : (
+          <>
+            <div className="flex items-center justify-between border-t border-pine/10 pt-3 text-xs text-muted">
+              <span className="flex items-center gap-1">
+                📍 {event.venue_name ?? "TBA"}
+              </span>
+              {lowestPrice !== null && (
+                <span className="font-mono font-medium text-pine">
+                  {lowestPrice === 0 ? "Free" : `From ${formatCurrency(lowestPrice)}`}
+                </span>
+              )}
+            </div>
+            <div className="mt-4">
+              <span className="block w-full rounded-sm bg-gold py-2.5 text-center font-mono text-[0.6rem] uppercase tracking-[0.16em] text-pine-deep transition-colors group-hover:bg-gold-light">
+                Register Now →
+              </span>
+            </div>
+          </>
+        )}
       </div>
     </Link>
   );
