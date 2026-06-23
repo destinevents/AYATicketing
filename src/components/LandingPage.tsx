@@ -514,19 +514,19 @@ export default function LandingPage({ events = [], totalMembers = 0, partners = 
           <div className="emag-layout reveal">
             <div>
               <div className="emag-flipbook" id="emag-frame">
-                {/* Replace the div below with your Heyzine iframe embed:
-                    <iframe src="https://heyzine.com/flip-book/YOUR-CODE.html" seamless scrolling="no" frameBorder="0" allowTransparency allowFullScreen style={{width:'100%',height:'100%'}} />
-                */}
-                <div className="emag-placeholder">
-                  <div className="placeholder-icon">📖</div>
-                  <p>Your Heyzine eMagazine flipbook will appear here. Paste your embed code above.</p>
-                  <div className="placeholder-code">
-                    {'<iframe src="https://heyzine.com/flip-book/YOUR-CODE.html" ... />'}
-                  </div>
-                </div>
+                <iframe
+                  src="https://heyzine.com/flip-book/ddbc9e518c.html"
+                  seamless
+                  scrolling="no"
+                  frameBorder="0"
+                  allowTransparency
+                  allowFullScreen
+                  style={{ width: '100%', height: '100%', border: 'none', display: 'block' }}
+                  title="AYA eMagazine Vol. 1 Issue 1"
+                />
               </div>
               <div style={{ marginTop: '1rem', display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-                <a href="#" className="btn-primary" style={{ fontSize: '0.6rem' }}>Read Latest Issue →</a>
+                <a href="https://heyzine.com/flip-book/ddbc9e518c.html" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ fontSize: '0.6rem' }}>Read Latest Issue →</a>
                 <a href="#" className="btn-ghost" style={{ fontSize: '0.6rem', borderColor: 'var(--border-fog)', color: 'var(--muted)' }}>Download PDF</a>
               </div>
             </div>
@@ -535,13 +535,15 @@ export default function LandingPage({ events = [], totalMembers = 0, partners = 
               <p className="section-sub">The AYA eMagazine spotlights Baguio's creators, SMEs, and stories that rarely make the mainstream press. Submissions open every month.</p>
               <div className="past-issues">
                 <div style={{ fontFamily: "'DM Mono', monospace", fontSize: '0.58rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '0.75rem' }}>Past Issues</div>
-                <div className="past-issue-item">
-                  <div className="past-issue-thumb">📕</div>
+                <a href="https://heyzine.com/flip-book/ddbc9e518c.html" target="_blank" rel="noopener noreferrer" className="past-issue-item" style={{ textDecoration: 'none' }}>
+                  <div className="past-issue-thumb" style={{ padding: 0, overflow: 'hidden' }}>
+                    <img src="/images/logos/aya-magazine-cover.png" alt="Vol. 1 Issue 1" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  </div>
                   <div>
                     <div className="past-issue-title">The Sip & Scale Launch Edition</div>
                     <div className="past-issue-date">June 2026 · Vol. 1 Issue 1</div>
                   </div>
-                </div>
+                </a>
                 <div className="past-issue-item">
                   <div className="past-issue-thumb" style={{ background: 'var(--fog-2)' }}>📗</div>
                   <div>
