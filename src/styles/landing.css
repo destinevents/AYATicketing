@@ -809,7 +809,8 @@ h2.section-title-light em {
   transition: transform 0.2s, box-shadow 0.2s;
 }
 .student-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(43,50,40,0.09); }
-.student-avatar { width: 48px; height: 48px; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 1.2rem; color: var(--fog); font-weight: 400; }
+.student-avatar { width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 1.2rem; color: var(--fog); font-weight: 400; }
+.student-avatar-photo { object-fit: cover; border: 2px solid var(--border-fog); }
 .student-name { font-family: 'Fraunces', serif; font-size: 0.95rem; font-weight: 400; color: var(--pine); margin-bottom: 3px; }
 .student-school { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 3px; }
 .student-role { font-size: 0.7rem; color: var(--muted); }

@@ -89,12 +89,12 @@ const STUDENTS_UBIT = Array.from({ length: 7 }, (_, i) => ({
 }));
 
 const STUDENTS_UCCITCS = [
-  { initial: 'M', name: 'Mary Keirstin Marziel Itliong Ante', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/Kei_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)' },
-  { initial: 'D', name: 'Derick Myles Mercado', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/Derick_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)' },
-  { initial: 'E', name: 'Ethan Wilvic Bernabe', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/Ethan_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)' },
-  { initial: 'J', name: 'Jhon Gabriel Maitas Carlos', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/Gab_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)' },
-  { initial: 'M', name: 'Miranda, Christian Joseph', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/CJ_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)' },
-  { initial: 'J', name: 'Ja', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/Ja_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)' },
+  { initial: 'M', name: 'Mary Keirstin Marziel Itliong Ante', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/Kei_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
+  { initial: 'D', name: 'Derick Myles Mercado', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/Derick_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
+  { initial: 'E', name: 'Ethan Wilvic Bernabe', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/Ethan_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
+  { initial: 'J', name: 'Jhon Gabriel Maitas Carlos', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/Gab_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
+  { initial: 'M', name: 'Miranda, Christian Joseph', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/CJ_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
+  { initial: 'J', name: 'Ja', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/Ja_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
 ];
 
 export default function LandingPage({ events = [], totalMembers = 0, partners = [] }: LandingPageProps) {
@@ -366,8 +366,29 @@ export default function LandingPage({ events = [], totalMembers = 0, partners = 
                 <a href="/Josh_PortfolioV1.html" target="_blank" rel="noopener noreferrer" className="sme-link" style={{ marginLeft: 'auto' }}>View Profile →</a>
               </div>
 
-              {/* UCBFA */}
+              {/* UCCITCS */}
               <div className="cohort-header reveal">
+                <div className="cohort-tag" style={{ background: 'rgba(122,155,106,0.15)', color: '#4E5C49', borderColor: 'rgba(122,155,106,0.3)' }}>UCCITCS</div>
+                <div className="cohort-title">University of the Cordilleras — College of Information Technology and Computer Science</div>
+                <div className="cohort-count">6 Students</div>
+              </div>
+              <div className="student-grid reveal">
+                {STUDENTS_UCCITCS.map((s, i) => (
+                  <div key={i} className="student-card">
+                    {s.image
+                      ? <img src={s.image} alt={s.name} className="student-avatar student-avatar-photo" />
+                      : <div className="student-avatar" style={{ background: s.gradient }}>{s.initial}</div>
+                    }
+                    <div className="student-name">{s.name}</div>
+                    <div className="student-school">{s.school}</div>
+                    <div className="student-role">{s.role}</div>
+                    <a href={s.link} target="_blank" rel="noopener noreferrer" className="student-profile-btn">View Profile</a>
+                  </div>
+                ))}
+              </div>
+
+              {/* UCBFA */}
+              <div className="cohort-header reveal" style={{ marginTop: '2.5rem' }}>
                 <div className="cohort-tag">UCBFA</div>
                 <div className="cohort-title">University of the Cordilleras — Business & Finance Arts</div>
                 <div className="cohort-count">8 Students</div>
@@ -398,24 +419,6 @@ export default function LandingPage({ events = [], totalMembers = 0, partners = 
                     <div className="student-school">{s.school}</div>
                     <div className="student-role">{s.role}</div>
                     <a href={s.link} className="student-profile-btn">View Profile</a>
-                  </div>
-                ))}
-              </div>
-
-              {/* UCCITCS */}
-              <div className="cohort-header reveal" style={{ marginTop: '2.5rem' }}>
-                <div className="cohort-tag" style={{ background: 'rgba(122,155,106,0.15)', color: '#4E5C49', borderColor: 'rgba(122,155,106,0.3)' }}>UCCITCS</div>
-                <div className="cohort-title">University of the Cordilleras — College of Information Technology and Computer Science</div>
-                <div className="cohort-count">6 Students</div>
-              </div>
-              <div className="student-grid reveal">
-                {STUDENTS_UCCITCS.map((s, i) => (
-                  <div key={i} className="student-card">
-                    <div className="student-avatar" style={{ background: s.gradient }}>{s.initial}</div>
-                    <div className="student-name">{s.name}</div>
-                    <div className="student-school">{s.school}</div>
-                    <div className="student-role">{s.role}</div>
-                    <a href={s.link} target="_blank" rel="noopener noreferrer" className="student-profile-btn">View Profile</a>
                   </div>
                 ))}
               </div>
