@@ -18,7 +18,7 @@ export function Navbar() {
       <div className="flex h-[72px] w-full items-center px-6 md:px-10">
         <Link href="/" className="flex items-center gap-3">
           <img
-            src="/images/logos/aya-baguio-text.png"
+            src="/images/logos/aya-baguio.jpg"
             alt="AYA Baguio"
             className="h-9 w-9 rounded-md object-contain"
             style={{ background: 'transparent' }}
