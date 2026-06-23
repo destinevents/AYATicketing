@@ -272,6 +272,33 @@ export default function LandingPage({ events = [], totalMembers = 0, partners = 
             </button>
           </div>
 
+          {/* ── FEATURED COLLAB CARD ── */}
+          <div className="featured-collab-card reveal">
+            <div className="featured-collab-top">
+              <a href="https://asyouarebaguio.com" target="_blank" rel="noopener noreferrer" className="featured-collab-badge">
+                Featured Collab
+              </a>
+              <a href="https://destinevents.biz" target="_blank" rel="noopener noreferrer" className="featured-collab-hosted">
+                Co-hosted by Destine Events
+              </a>
+            </div>
+            <div className="featured-collab-identity">
+              {process.env.NEXT_PUBLIC_COMPANY_LOGO_URL && (
+                <img src={process.env.NEXT_PUBLIC_COMPANY_LOGO_URL} alt="AYA Logo" className="featured-collab-logo" />
+              )}
+              <div>
+                <div className="featured-collab-name"><em>As You Are</em> Baguio</div>
+                <div className="featured-collab-founder">Founded by Monica Joy Fernandez</div>
+              </div>
+            </div>
+            <p className="featured-collab-desc">A creator and storytelling community connecting people, brands, and opportunities in the Cordillera — and beyond. Creators, influencers, features, magazine &amp; partnerships.</p>
+            <div className="featured-collab-tags">
+              {['Creators & Influencers', 'Creator Features', 'Digital Magazine', 'Brand Partnerships', 'Creator Memberships'].map((t) => (
+                <span key={t} className="featured-collab-tag">{t}</span>
+              ))}
+            </div>
+          </div>
+
           {/* TAB 1: CONTENT CREATORS */}
           {activeTab === 'content-creators' && (
             <div>

@@ -734,6 +734,102 @@ h2.section-title-light em {
 .results-meta-dark { color: rgba(240,237,230,0.65); }
 
 /* ─────────────────────────────────────────────
+   FEATURED COLLAB CARD
+───────────────────────────────────────────── */
+.featured-collab-card {
+  background: var(--paper, #faf8f4);
+  border: 1px solid var(--border-fog);
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 1px 6px rgba(43,50,40,0.06);
+}
+.featured-collab-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.1rem;
+}
+.featured-collab-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--pine-deep, #1D2219);
+  color: var(--fog, #f0ede6);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background 0.18s, transform 0.15s;
+}
+.featured-collab-badge:hover { background: var(--pine, #3A4A32); transform: translateY(-1px); }
+.featured-collab-hosted {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted, #6B7864);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.featured-collab-hosted:hover { color: var(--pine, #3A4A32); }
+.featured-collab-identity {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+}
+.featured-collab-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  object-fit: contain;
+  border: 1px solid var(--border-fog);
+  background: var(--fog-2, #f0ede6);
+}
+.featured-collab-name {
+  font-family: 'Fraunces', serif;
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: var(--pine-deep, #1D2219);
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.featured-collab-name em { font-style: italic; }
+.featured-collab-founder {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--terra, #A0522D);
+}
+.featured-collab-desc {
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--ink, #2B3228);
+  opacity: 0.75;
+  margin-bottom: 1rem;
+}
+.featured-collab-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.featured-collab-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted, #6B7864);
+  border: 1px solid var(--border-fog);
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+
+/* ─────────────────────────────────────────────
    CREATOR TABS
 ───────────────────────────────────────────── */
 .creator-tabs { display: flex; gap: 0.75rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border-fog); padding-bottom: 0; }
