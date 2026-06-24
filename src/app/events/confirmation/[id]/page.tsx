@@ -7,7 +7,6 @@ import { generateQrDataUrl } from "@/lib/qrcode";
 import { formatCurrency, formatDate, formatTime } from "@/lib/utils";
 import { PayNowButton } from "@/components/PayNowButton";
 import { CancelPaymentButton } from "@/components/CancelPaymentButton";
-import { CancelRegistrationButton } from "@/components/CancelRegistrationButton";
 
 interface ConfirmationPageProps {
   params: Promise<{ id: string }>;
@@ -35,6 +34,17 @@ export default async function ConfirmationPage({ params, searchParams }: Confirm
   const isPaid = paymentRecord?.status === "paid";
   const isFree = Number(ticket?.price ?? 0) === 0;
   const paymentPending = paymentRecord?.status === "pending";
+
+  // DEBUG — remove after diagnosing cancel button visibility
+  console.log("[confirmation] payment debug", {
+    registrationId: id,
+    paymentsArray: registration.payments,
+    paymentRecord,
+    paymentStatus: paymentRecord?.status,
+    isPaid,
+    isFree,
+    paymentPending,
+  });
 
   const qrDataUrl = registration.qr_code ? await generateQrDataUrl(registration.qr_code) : null;
 
@@ -126,6 +136,11 @@ export default async function ConfirmationPage({ params, searchParams }: Confirm
               {paymentPending && (
                 <CancelPaymentButton registrationId={registration.id} />
               )}
+
+              {/* DEBUG — remove after diagnosing */}
+              <pre className="mt-3 rounded bg-black/5 p-2 font-mono text-[0.55rem] text-muted">
+                {JSON.stringify({ payments: registration.payments, paymentStatus: paymentRecord?.status, paymentPending }, null, 2)}
+              </pre>
 
               <details className="group">
                 <summary className="cursor-pointer list-none font-mono text-[0.6rem] uppercase tracking-[0.12em] text-terra">
