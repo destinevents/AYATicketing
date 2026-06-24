@@ -41,6 +41,7 @@ export function EventForm({ mode, initialEvent }: EventFormProps) {
   const [category, setCategory] = useState<EventCategory>(initialEvent?.category ?? "other");
   const [status, setStatus] = useState<EventStatus>(initialEvent?.status ?? "draft");
   const [isFeatured, setIsFeatured] = useState(initialEvent?.is_featured ?? false);
+  const [comingSoon, setComingSoon] = useState(initialEvent?.coming_soon ?? false);
 
   const [startDate, setStartDate] = useState(toLocalDateTimeInput(initialEvent?.start_date ?? null));
   const [endDate, setEndDate] = useState(toLocalDateTimeInput(initialEvent?.end_date ?? null));
@@ -170,6 +171,7 @@ export function EventForm({ mode, initialEvent }: EventFormProps) {
       category,
       status,
       is_featured: isFeatured,
+      coming_soon: comingSoon,
       start_date: startDate ? new Date(startDate).toISOString() : new Date().toISOString(),
       end_date: endDate ? new Date(endDate).toISOString() : null,
       venue_name: venueName || null,
@@ -248,6 +250,10 @@ export function EventForm({ mode, initialEvent }: EventFormProps) {
           <label className="flex items-center gap-2 text-sm text-ink/80">
             <input type="checkbox" checked={isFeatured} onChange={(e) => setIsFeatured(e.target.checked)} className="h-4 w-4 rounded border-pine/30 accent-pine" />
             Feature this event on the Events Hub banner
+          </label>
+          <label className="flex items-center gap-2 text-sm text-ink/80">
+            <input type="checkbox" checked={comingSoon} onChange={(e) => setComingSoon(e.target.checked)} className="h-4 w-4 rounded border-pine/30 accent-pine" />
+            Mark as "Coming Soon" (hides registration, shows watch-for-this-space banner)
           </label>
         </div>
       </div>
