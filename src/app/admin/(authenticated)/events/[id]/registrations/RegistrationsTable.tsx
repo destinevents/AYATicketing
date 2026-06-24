@@ -21,7 +21,7 @@ interface RegistrationRow {
   payments: { id: string; amount: number; method: string; status: PaymentStatus }[];
 }
 
-const PAYMENT_STATUSES: PaymentStatus[] = ["pending", "paid", "cancelled", "refunded"];
+const PAYMENT_STATUSES: PaymentStatus[] = ["pending", "paid", "cancelled", "refunded", "expired"];
 
 function RegStatusBadge({ status }: { status: RegistrationStatus }) {
   const styles: Record<RegistrationStatus, string> = {
@@ -37,8 +37,50 @@ function RegStatusBadge({ status }: { status: RegistrationStatus }) {
   );
 }
 
+const PAY_STATUS_STYLES: Record<string, string> = {
+  paid:      "border-moss/30 bg-moss/10 text-moss",
+  pending:   "border-gold/30 bg-gold/10 text-terra",
+  cancelled: "border-terra/20 bg-terra/5 text-terra",
+  refunded:  "border-pine/20 bg-pine/5 text-muted",
+  expired:   "border-slate-300 bg-slate-50 text-slate-500",
+};
+
+const FILTER_OPTIONS: Array<{ label: string; value: PaymentStatus | "all" }> = [
+  { label: "All", value: "all" },
+  { label: "Pending", value: "pending" },
+  { label: "Paid", value: "paid" },
+  { label: "Cancelled", value: "cancelled" },
+  { label: "Expired", value: "expired" },
+  { label: "Refunded", value: "refunded" },
+];
+
 export function RegistrationsTable({ registrations }: { registrations: RegistrationRow[] }) {
+  const [payFilter, setPayFilter] = useState<PaymentStatus | "all">("all");
+
+  const visible = payFilter === "all"
+    ? registrations
+    : registrations.filter((r) => (r.payments?.[0]?.status ?? "pending") === payFilter);
+
   return (
+    <div>
+      {/* Payment status filter */}
+      <div className="mb-4 flex flex-wrap items-center gap-2">
+        <span className="font-mono text-[0.58rem] uppercase tracking-[0.1em] text-muted">Filter by payment:</span>
+        {FILTER_OPTIONS.map((opt) => (
+          <button
+            key={opt.value}
+            onClick={() => setPayFilter(opt.value)}
+            className={`rounded-full border px-3 py-1 font-mono text-[0.6rem] uppercase tracking-[0.08em] transition-colors ${
+              payFilter === opt.value
+                ? "border-pine bg-pine text-fog"
+                : "border-pine/15 text-muted hover:border-pine/30 hover:text-pine"
+            }`}
+          >
+            {opt.label}
+          </button>
+        ))}
+      </div>
+
     <div className="overflow-x-auto rounded-xl border border-pine/10 bg-white">
       <table className="w-full min-w-[700px] text-sm">
         <thead>
@@ -53,14 +95,19 @@ export function RegistrationsTable({ registrations }: { registrations: Registrat
           </tr>
         </thead>
         <tbody>
-          {registrations.map((r) => (
+          {visible.map((r) => (
             <RegistrationRowItem key={r.id} reg={r} />
           ))}
         </tbody>
       </table>
-      {registrations.length === 0 && (
-        <div className="py-12 text-center text-sm text-muted">No registrations yet for this event.</div>
+      {visible.length === 0 && (
+        <div className="py-12 text-center text-sm text-muted">
+          {registrations.length === 0
+            ? "No registrations yet for this event."
+            : "No registrations match the selected payment status filter."}
+        </div>
       )}
+    </div>
     </div>
   );
 }
@@ -79,6 +126,7 @@ function RegistrationRowItem({ reg }: { reg: RegistrationRow }) {
     pending: "pending",
     cancelled: "cancelled",
     refunded: "cancelled",
+    expired: "cancelled",
   };
 
   async function updatePaymentStatus(status: PaymentStatus) {
@@ -164,13 +212,7 @@ function RegistrationRowItem({ reg }: { reg: RegistrationRow }) {
             value={payStatus}
             disabled={updating}
             onChange={(e) => updatePaymentStatus(e.target.value as PaymentStatus)}
-            className={`rounded-full border px-2 py-1 font-mono text-[0.6rem] uppercase tracking-[0.08em] outline-none ${
-              payStatus === "paid"
-                ? "border-moss/30 bg-moss/10 text-moss"
-                : payStatus === "pending"
-                ? "border-gold/30 bg-gold/10 text-terra"
-                : "border-terra/20 bg-terra/5 text-terra"
-            }`}
+            className={`rounded-full border px-2 py-1 font-mono text-[0.6rem] uppercase tracking-[0.08em] outline-none ${PAY_STATUS_STYLES[payStatus] ?? "border-pine/10 text-muted"}`}
           >
             {PAYMENT_STATUSES.map((s) => (
               <option key={s} value={s}>{s}</option>

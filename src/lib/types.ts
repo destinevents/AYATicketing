@@ -31,7 +31,7 @@ export type PaymentMethod =
   | "paymongo"
   | "free"
   | "cash";
-export type PaymentStatus = "pending" | "paid" | "cancelled" | "refunded";
+export type PaymentStatus = "pending" | "paid" | "cancelled" | "refunded" | "expired";
 export type SponsorStatus = "lead" | "confirmed" | "paid" | "completed";
 
 export type EmailType =

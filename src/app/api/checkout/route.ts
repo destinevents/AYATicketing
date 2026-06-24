@@ -47,6 +47,13 @@ export async function POST(request: Request) {
       cancelUrl: `${siteUrl}/events/confirmation/${registration.id}?payment=cancelled`,
     });
 
+    // Store session ID and reset payment to pending (handles cancelled/expired retries)
+    await supabase
+      .from("payments")
+      .update({ checkout_session_id: session.sessionId, status: "pending" })
+      .eq("registration_id", registration_id)
+      .in("status", ["pending", "cancelled", "expired"]);
+
     return NextResponse.json({ checkout_url: session.checkoutUrl });
   } catch (e) {
     if (e instanceof z.ZodError) {

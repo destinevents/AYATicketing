@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { generateQrDataUrl } from "@/lib/qrcode";
 import { formatCurrency, formatDate, formatTime } from "@/lib/utils";
 import { PayNowButton } from "@/components/PayNowButton";
+import { CancelPaymentButton } from "@/components/CancelPaymentButton";
 import { CancelRegistrationButton } from "@/components/CancelRegistrationButton";
 
 interface ConfirmationPageProps {
@@ -33,6 +34,7 @@ export default async function ConfirmationPage({ params, searchParams }: Confirm
 
   const isPaid = paymentRecord?.status === "paid";
   const isFree = Number(ticket?.price ?? 0) === 0;
+  const paymentPending = paymentRecord?.status === "pending";
 
   const qrDataUrl = registration.qr_code ? await generateQrDataUrl(registration.qr_code) : null;
 
@@ -121,10 +123,9 @@ export default async function ConfirmationPage({ params, searchParams }: Confirm
               </p>
 
               <PayNowButton registrationId={registration.id} />
-              <CancelRegistrationButton
-                registrationId={registration.id}
-                eventSlug={event?.slug ?? ""}
-              />
+              {paymentPending && (
+                <CancelPaymentButton registrationId={registration.id} />
+              )}
 
               <details className="group">
                 <summary className="cursor-pointer list-none font-mono text-[0.6rem] uppercase tracking-[0.12em] text-terra">

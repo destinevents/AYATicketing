@@ -239,6 +239,8 @@ export default async function AdminDashboardPage() {
     { data: pendingPayments },
     { data: revenueSummary },
     { data: weeklyRegs },
+    { count: cancelledThisWeek },
+    { count: expiredThisWeek },
   ] = await Promise.all([
     supabase.from("events").select("*", { count: "exact", head: true }),
     supabase.from("events").select("*", { count: "exact", head: true }).gte("start_date", now.toISOString()),
@@ -251,6 +253,8 @@ export default async function AdminDashboardPage() {
     supabase.from("payments").select("amount").eq("status", "pending"),
     supabase.from("event_revenue_summary").select("*"),
     supabase.from("registrations").select("created_at").gte("created_at", sevenDaysAgo.toISOString()),
+    supabase.from("payments").select("*", { count: "exact", head: true }).eq("status", "cancelled").gte("created_at", sevenDaysAgo.toISOString()),
+    supabase.from("payments").select("*", { count: "exact", head: true }).eq("status", "expired").gte("created_at", sevenDaysAgo.toISOString()),
   ]);
 
   const totalRevenue = (paidPayments ?? []).reduce((s, p) => s + Number(p.amount), 0);
@@ -318,6 +322,14 @@ export default async function AdminDashboardPage() {
               <div className="text-xs text-pine/40">Sponsors</div>
             </div>
           </div>
+          {((cancelledThisWeek ?? 0) + (expiredThisWeek ?? 0)) > 0 && (
+            <div className="mb-4 rounded-lg border border-terra/20 bg-terra/5 px-3 py-2 text-xs text-terra/80">
+              <span className="font-medium">{(cancelledThisWeek ?? 0) + (expiredThisWeek ?? 0)}</span> cancelled / expired this week
+              {(expiredThisWeek ?? 0) > 0 && (
+                <span className="ml-1 text-slate-400">({expiredThisWeek} timed out)</span>
+              )}
+            </div>
+          )}
           <div className="border-t border-pine/8 pt-4">
             <div className="mb-1 flex items-baseline justify-between gap-2">
               <span className="text-xs text-pine/50">Total revenue</span>

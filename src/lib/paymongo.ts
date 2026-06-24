@@ -79,6 +79,17 @@ export async function createCheckoutSession({
   };
 }
 
+export async function expireCheckoutSession(sessionId: string): Promise<void> {
+  const res = await fetch(`${BASE_URL}/checkout_sessions/${sessionId}/expire`, {
+    method: "POST",
+    headers: { Authorization: authHeader() },
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => null);
+    console.warn("[PayMongo] Could not expire session", sessionId, err?.errors?.[0]?.detail);
+  }
+}
+
 export function verifyWebhookSignature(
   rawBody: string,
   signatureHeader: string,

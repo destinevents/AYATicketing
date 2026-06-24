@@ -119,6 +119,11 @@ export async function POST(request: Request) {
           cancelUrl: `${siteUrl}/events/confirmation/${registration.id}?payment=cancelled`,
         });
         checkoutUrl = session.checkoutUrl;
+        // Store session ID so we can expire it server-side on cancel/timeout
+        await supabase
+          .from("payments")
+          .update({ checkout_session_id: session.sessionId })
+          .eq("registration_id", registration.id);
       } catch {
         checkoutUrl = process.env.NEXT_PUBLIC_PAYMONGO_PAYMENT_LINK ?? null;
       }
