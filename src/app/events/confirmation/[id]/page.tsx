@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { generateQrDataUrl } from "@/lib/qrcode";
@@ -17,7 +17,7 @@ export default async function ConfirmationPage({ params, searchParams }: Confirm
   const { id } = await params;
   const { payment: paymentParam } = await searchParams;
   const paymentCancelled = paymentParam === "cancelled";
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   const { data: registration } = await supabase
     .from("registrations")
@@ -34,17 +34,6 @@ export default async function ConfirmationPage({ params, searchParams }: Confirm
   const isPaid = paymentRecord?.status === "paid";
   const isFree = Number(ticket?.price ?? 0) === 0;
   const paymentPending = paymentRecord?.status === "pending";
-
-  // DEBUG — remove after diagnosing cancel button visibility
-  console.log("[confirmation] payment debug", {
-    registrationId: id,
-    paymentsArray: registration.payments,
-    paymentRecord,
-    paymentStatus: paymentRecord?.status,
-    isPaid,
-    isFree,
-    paymentPending,
-  });
 
   const qrDataUrl = registration.qr_code ? await generateQrDataUrl(registration.qr_code) : null;
 
@@ -136,11 +125,6 @@ export default async function ConfirmationPage({ params, searchParams }: Confirm
               {paymentPending && (
                 <CancelPaymentButton registrationId={registration.id} />
               )}
-
-              {/* DEBUG — remove after diagnosing */}
-              <pre className="mt-3 rounded bg-black/5 p-2 font-mono text-[0.55rem] text-muted">
-                {JSON.stringify({ payments: registration.payments, paymentStatus: paymentRecord?.status, paymentPending }, null, 2)}
-              </pre>
 
               <details className="group">
                 <summary className="cursor-pointer list-none font-mono text-[0.6rem] uppercase tracking-[0.12em] text-terra">
