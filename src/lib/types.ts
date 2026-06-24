@@ -102,6 +102,7 @@ export interface EventRecord {
   faqs: FaqItem[];
 
   is_featured: boolean;
+  coming_soon: boolean;
   capacity_total: number | null;
 
   created_at: string;
