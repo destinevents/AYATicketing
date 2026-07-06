@@ -2,21 +2,21 @@
    TOKENS
 ───────────────────────────────────────────── */
 :root {
-  --pine:       #2B3228;
-  --pine-deep:  #1D2219;
-  --pine-mid:   #3A4436;
-  --pine-light: #4E5C49;
-  --fog:        #F0EDE6;
-  --fog-2:      #E8E4DC;
+  --pine:       #1C1C1A;
+  --pine-deep:  #111110;
+  --pine-mid:   #2E2E2C;
+  --pine-light: #444442;
+  --fog:        #EDE8DF;
+  --fog-2:      #E4DED5;
   --fog-warm:   #FAF8F4;
   --gold:       #C9A84C;
   --gold-lt:    #DEC270;
   --moss:       #7A9B6A;
   --terra:      #8B4A35;
-  --ink:        #1A1E18;
-  --muted:      #6B7864;
-  --border-fog: rgba(43,50,40,0.12);
-  --border-pine:rgba(240,237,230,0.12);
+  --ink:        #1A1A18;
+  --muted:      #8A8480;
+  --border-fog: rgba(28,28,26,0.12);
+  --border-pine:rgba(237,232,223,0.12);
 }
 
 /* ─────────────────────────────────────────────
