@@ -278,7 +278,7 @@ export default function LandingPage({ events = [], totalMembers = 0, partners = 
                 <div className="creator-card creator-featured">
                   <div className="creator-cover">
                     <div className="creator-cover-gradient" style={{ background: 'linear-gradient(135deg,#2B3228,#4E5C49)' }} />
-                    <div className="creator-avatar">👩‍💼</div>
+                    <div className="creator-avatar"><img src="https://i.ibb.co/3LZtLZW/download.jpg" alt="Monica Joy Fernandez" /></div>
                     <div className="featured-badge">✦ Co-Host</div>
                   </div>
                   <div className="creator-body">
@@ -306,7 +306,7 @@ export default function LandingPage({ events = [], totalMembers = 0, partners = 
                 <div className="creator-card creator-featured">
                   <div className="creator-cover">
                     <div className="creator-cover-gradient" style={{ background: 'linear-gradient(135deg,#1D2A3A,#2D5A8E)' }} />
-                    <div className="creator-avatar">🎙️</div>
+                    <div className="creator-avatar"><img src="https://i.ibb.co/mMffBfK/download.jpg" alt="Jan" /></div>
                     <div className="featured-badge">✦ Creator</div>
                   </div>
                   <div className="creator-body">
@@ -350,7 +350,22 @@ export default function LandingPage({ events = [], totalMembers = 0, partners = 
               </div>
 
               <div className="student-leader-banner reveal">
-                <div className="slb-icon">🎓</div>
+                <div className="slb-icon">
+                 <a href="https://ibb.co/RpwXDhYf" target="_blank" rel="noopener noreferrer">
+                  <img 
+                    src="https://i.ibb.co/0jb0GBmT/JOSH.jpg" 
+                    alt="JOSH" 
+                    style={{ 
+                      width: '50px', 
+                      height: '50px', 
+                      borderRadius: '50%', 
+                      objectFit: 'cover',
+                      border: 'none',
+                      display: 'block'
+                      }} 
+                    />
+                  </a> 
+                </div>
                 <div>
                   <div className="slb-label">Student Leader</div>
                   <div className="slb-name">Josh</div>

@@ -421,7 +421,7 @@ h2.section-title-light em {
   transition: transform 0.25s, box-shadow 0.25s;
 }
 .creator-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(43,50,40,0.1); }
-.creator-cover { height: 100px; background: var(--pine); position: relative; overflow: hidden; }
+.creator-cover { height: 100px; background: var(--pine); position: relative; }
 .creator-cover-gradient { position: absolute; inset: 0; }
 .creator-avatar {
   position: absolute;
