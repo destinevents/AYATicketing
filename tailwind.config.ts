@@ -10,24 +10,28 @@ const config: Config = {
     extend: {
       colors: {
         pine: {
-          DEFAULT: "#1C1C1A",
-          deep: "#111110",
-          mid: "#2E2E2C",
-          light: "#444442",
+          DEFAULT: "#241408",
+          deep: "#160C04",
+          mid: "#3A2010",
+          light: "#5A3820",
         },
         fog: {
-          DEFAULT: "#EDE8DF",
-          2: "#E4DED5",
-          warm: "#FAF8F4",
+          DEFAULT: "#EDE8DC",
+          2: "#E4DDD0",
+          warm: "#F5F1EA",
         },
         gold: {
           DEFAULT: "#C9A84C",
           light: "#DEC270",
         },
         moss: "#7A9B6A",
-        terra: "#8B4A35",
-        ink: "#1A1A18",
-        muted: "#8A8480",
+        terra: {
+          DEFAULT: "#B55230",
+          light: "#C96840",
+          deep: "#8B3E22",
+        },
+        ink: "#1E1208",
+        muted: "#8A7A6E",
       },
       fontFamily: {
         display: ["var(--font-fraunces)", "serif"],

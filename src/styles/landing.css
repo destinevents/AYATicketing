@@ -2,21 +2,22 @@
    TOKENS
 ───────────────────────────────────────────── */
 :root {
-  --pine:       #1C1C1A;
-  --pine-deep:  #111110;
-  --pine-mid:   #2E2E2C;
-  --pine-light: #444442;
-  --fog:        #EDE8DF;
-  --fog-2:      #E4DED5;
-  --fog-warm:   #FAF8F4;
+  --pine:       #241408;
+  --pine-deep:  #160C04;
+  --pine-mid:   #3A2010;
+  --pine-light: #5A3820;
+  --fog:        #EDE8DC;
+  --fog-2:      #E4DDD0;
+  --fog-warm:   #F5F1EA;
   --gold:       #C9A84C;
   --gold-lt:    #DEC270;
   --moss:       #7A9B6A;
-  --terra:      #8B4A35;
-  --ink:        #1A1A18;
-  --muted:      #8A8480;
-  --border-fog: rgba(28,28,26,0.12);
-  --border-pine:rgba(237,232,223,0.12);
+  --terra:      #B55230;
+  --terra-lt:   #C96840;
+  --ink:        #1E1208;
+  --muted:      #8A7A6E;
+  --border-fog: rgba(36,20,8,0.12);
+  --border-pine:rgba(237,232,220,0.12);
 }
 
 /* ─────────────────────────────────────────────
@@ -204,7 +205,7 @@ h2.section-title-light em {
   font-size: 0.58rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--terra);
   display: flex;
   align-items: center;
   gap: 0.7rem;
@@ -215,7 +216,7 @@ h2.section-title-light em {
   display: block;
   width: 28px;
   height: 1px;
-  background: var(--gold);
+  background: var(--terra);
   flex-shrink: 0;
 }
 .hero-headline {
@@ -226,7 +227,7 @@ h2.section-title-light em {
   color: var(--ink);
   margin-bottom: 1.5rem;
 }
-.hero-headline em { font-style: italic; color: var(--gold); font-weight: 300; }
+.hero-headline em { font-style: italic; color: var(--terra); font-weight: 300; }
 .hero-headline strong { display: block; font-weight: 400; color: var(--ink); }
 .hero-sub {
   font-size: 1.05rem;

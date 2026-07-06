@@ -3,10 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --color-pine: #1c1c1a;
-  --color-pine-deep: #111110;
-  --color-fog: #ede8df;
+  --color-pine: #241408;
+  --color-pine-deep: #160C04;
+  --color-fog: #ede8dc;
   --color-gold: #c9a84c;
+  --color-terra: #b55230;
 }
 
 * {
