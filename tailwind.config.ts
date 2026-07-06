@@ -16,9 +16,9 @@ const config: Config = {
           light: "#5A3820",
         },
         fog: {
-          DEFAULT: "#EDE8DC",
-          2: "#E4DDD0",
-          warm: "#F5F1EA",
+          DEFAULT: "#D4B48C",
+          2: "#C8A87E",
+          warm: "#DEC29A",
         },
         gold: {
           DEFAULT: "#C9A84C",
