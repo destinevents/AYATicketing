@@ -425,7 +425,6 @@ h2.section-title-light em {
   height: 100px;
   background: var(--pine);
   position: relative;
-  overflow: hidden;
   transition: height 0.35s ease;
 }
 .creator-card:hover .creator-cover { height: 150px; }
