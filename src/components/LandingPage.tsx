@@ -60,7 +60,7 @@ function getLowestPrice(tickets: EventTicket[]): string {
 
 function getSeatsRemaining(tickets: EventTicket[]): string {
   const open = tickets.filter(t => t.status !== 'hidden' && t.status !== 'closed');
-  if (!open.length) return 'Sold out';
+  if (!open.length) return '';
   const totalRemaining = open.reduce((sum, t) => {
     if (t.capacity <= 0) return sum + 999;
     return sum + Math.max(t.capacity - t.sold, 0);

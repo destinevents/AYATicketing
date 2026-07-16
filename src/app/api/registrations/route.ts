@@ -41,7 +41,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Ticket not found." }, { status: 404 });
     }
 
-    if (ticket.status === "hidden" || ticket.status === "closed") {
+    if (ticket.status === "hidden" || ticket.status === "closed" || ticket.status === "sold_out") {
       return NextResponse.json({ error: "This ticket is no longer available." }, { status: 400 });
     }
 
