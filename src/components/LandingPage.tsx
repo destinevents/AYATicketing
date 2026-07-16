@@ -606,6 +606,7 @@ export default function LandingPage({ events = [], totalMembers = 0, partners = 
               const price = getLowestPrice(event.event_tickets ?? []);
               const seats = getSeatsRemaining(event.event_tickets ?? []);
               const isSoldOut = seats === 'Sold out';
+              const hasNoTickets = seats === '';
               return (
                 <div key={event.id} className="event-card">
                   <div className="event-cover">
@@ -641,6 +642,8 @@ export default function LandingPage({ events = [], totalMembers = 0, partners = 
                         <span className="event-seats">{seats}</span>
                         {isSoldOut
                           ? <span className="event-register" style={{ opacity: 0.5, cursor: 'default' }}>Sold Out</span>
+                          : hasNoTickets
+                          ? <a href={`/events/${event.slug}`} className="event-register" style={{ opacity: 0.6 }}>View Event</a>
                           : <a href={`/events/${event.slug}`} className="event-register">Register Now</a>
                         }
                       </>
