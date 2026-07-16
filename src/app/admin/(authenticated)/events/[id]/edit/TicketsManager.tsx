@@ -159,6 +159,14 @@ function TicketRow({
         </Field>
         <Field label="Capacity (0 = unlimited)">
           <input type="number" min="0" value={capacity} onChange={(e) => setCapacity(e.target.value)} className={inputClass} />
+          {ticket && ticket.capacity > 0 && (
+            <p className="mt-1 font-mono text-[0.58rem] text-muted">
+              {ticket.sold} / {ticket.capacity} sold
+              {ticket.sold >= ticket.capacity && (
+                <span className="ml-1 text-terra"> — increase capacity to open more slots</span>
+              )}
+            </p>
+          )}
         </Field>
         <Field label="Sales Start">
           <input type="datetime-local" value={salesStart} onChange={(e) => setSalesStart(e.target.value)} className={inputClass} />
