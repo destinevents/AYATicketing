@@ -82,12 +82,12 @@ const STUDENTS_UCBFA = Array.from({ length: 8 }, (_, i) => ({
 
 
 const STUDENTS_UCCITCS = [
-  { initial: 'M', name: 'Mary Keirstin Marziel Itliong Ante', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/Kei_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
-  { initial: 'D', name: 'Derick Myles Mercado', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/Derick_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: 'https://scontent.fcrk1-2.fna.fbcdn.net/v/t39.30808-6/499934252_2613479442330977_3090380740370684422_n.jpg?stp=dst-jpg_tt6&cstp=mx1080x1080&ctp=s1080x1080&_nc_cat=110&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeFmbQPNJFnGkpM2tZb4yuOTMF4TlRRfr48wXhOVFF-vj-Ak7_lJ6ItYqkPDbB2dD7R3FzCIkC7b58b7Qzo5sq_C&_nc_ohc=z0-rZjwxiNwQ7kNvwGW3jQx&_nc_oc=AdpJoyMQaBEztkKpN2n7bXZPR_HHy31JQjD5hsugmbCyLHqGp_djbAL3hzw5kflxTlg&_nc_zt=23&_nc_ht=scontent.fcrk1-2.fna&_nc_gid=UICdPpDp3k1eruBVKhewGA&_nc_ss=7b2a8&oh=00_Af_c2wJ1howOc-2zyvAUQAIS8rS4SiuQSSpE-EAQLIrteg&oe=6A40536B' },
-  { initial: 'E', name: 'Ethan Wilvic Bernabe', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/Ethan_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
-  { initial: 'J', name: 'Jhon Gabriel Maitas Carlos', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/Gab_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
-  { initial: 'M', name: 'Miranda, Christian Joseph', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/CJ_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
-  { initial: 'J', name: 'Ja', school: 'UCCITCS', role: 'Intern · Batch 2026', link: '/Ja_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
+  { initial: 'M', name: 'Mary Keirstin Marziel Itliong Ante', school: 'BSIT', role: 'Intern · Batch 2026', link: '/Kei_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
+  { initial: 'D', name: 'Derick Myles Mercado', school: 'BSIT', role: 'Intern · Batch 2026', link: '/Derick_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: 'https://scontent.fcrk1-2.fna.fbcdn.net/v/t39.30808-6/499934252_2613479442330977_3090380740370684422_n.jpg?stp=dst-jpg_tt6&cstp=mx1080x1080&ctp=s1080x1080&_nc_cat=110&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeFmbQPNJFnGkpM2tZb4yuOTMF4TlRRfr48wXhOVFF-vj-Ak7_lJ6ItYqkPDbB2dD7R3FzCIkC7b58b7Qzo5sq_C&_nc_ohc=z0-rZjwxiNwQ7kNvwGW3jQx&_nc_oc=AdpJoyMQaBEztkKpN2n7bXZPR_HHy31JQjD5hsugmbCyLHqGp_djbAL3hzw5kflxTlg&_nc_zt=23&_nc_ht=scontent.fcrk1-2.fna&_nc_gid=UICdPpDp3k1eruBVKhewGA&_nc_ss=7b2a8&oh=00_Af_c2wJ1howOc-2zyvAUQAIS8rS4SiuQSSpE-EAQLIrteg&oe=6A40536B' },
+  { initial: 'E', name: 'Ethan Wilvic Bernabe', school: 'BMMA', role: 'Intern · Batch 2026', link: '/Ethan_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
+  { initial: 'J', name: 'Jhon Gabriel Maitas Carlos', school: 'BSIT', role: 'Intern · Batch 2026', link: '/Gab_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
+  { initial: 'M', name: 'Miranda, Christian Joseph', school: 'BCSA', role: 'Intern · Batch 2026', link: '/CJ_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
+  { initial: 'J', name: 'Ja', school: 'BMMA', role: 'Intern · Batch 2026', link: '/Ja_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
 ];
 
 export default function LandingPage({ events = [], totalMembers = 0, partners = [] }: LandingPageProps) {
@@ -398,7 +398,7 @@ export default function LandingPage({ events = [], totalMembers = 0, partners = 
               {/* UCBFA */}
               <div className="cohort-header reveal" style={{ marginTop: '2.5rem' }}>
                 <div className="cohort-tag">UCBFA</div>
-                <div className="cohort-title">University of the Cordilleras — Business & Finance Arts</div>
+                <div className="cohort-title">University of the Cordilleras — Bachelor of Fine Arts Major in MultiMedia</div>
                 <div className="cohort-count">8 Students</div>
               </div>
               <div className="student-grid reveal">
