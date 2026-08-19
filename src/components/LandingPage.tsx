@@ -74,7 +74,7 @@ function getSeatsRemaining(tickets: EventTicket[]): string {
 const STUDENTS_UCBFA = Array.from({ length: 8 }, (_, i) => ({
   initial: 'S',
   name: `Student ${i + 1}`,
-  school: 'UCBFA',
+  school: 'BFA',
   role: 'Intern · Batch 2026',
   link: '#',
   gradient: 'linear-gradient(135deg,#2B3228,#4E5C49)',
@@ -376,7 +376,7 @@ export default function LandingPage({ events = [], totalMembers = 0, partners = 
 
               {/* UCCITCS */}
               <div className="cohort-header reveal">
-                <div className="cohort-tag" style={{ background: 'rgba(122,155,106,0.15)', color: '#4E5C49', borderColor: 'rgba(122,155,106,0.3)' }}>UCCITCS</div>
+                <div className="cohort-tag" style={{ background: 'rgba(122,155,106,0.15)', color: '#4E5C49', borderColor: 'rgba(122,155,106,0.3)' }}>UC-CITCS</div>
                 <div className="cohort-title">University of the Cordilleras — College of Information Technology and Computer Science</div>
                 <div className="cohort-count">6 Students</div>
               </div>
@@ -397,7 +397,7 @@ export default function LandingPage({ events = [], totalMembers = 0, partners = 
 
               {/* UCBFA */}
               <div className="cohort-header reveal" style={{ marginTop: '2.5rem' }}>
-                <div className="cohort-tag">UCBFA</div>
+                <div className="cohort-tag">UC-BFA</div>
                 <div className="cohort-title">University of the Cordilleras — Bachelor of Fine Arts Major in MultiMedia</div>
                 <div className="cohort-count">8 Students</div>
               </div>
