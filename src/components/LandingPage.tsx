@@ -71,25 +71,6 @@ function getSeatsRemaining(tickets: EventTicket[]): string {
 }
 
 
-const STUDENTS_UCBFA = Array.from({ length: 8 }, (_, i) => ({
-  initial: 'S',
-  name: `Student ${i + 1}`,
-  school: 'BFA',
-  role: 'Intern · Batch 2026',
-  link: '#',
-  gradient: 'linear-gradient(135deg,#2B3228,#4E5C49)',
-}));
-
-
-const STUDENTS_UCCITCS = [
-  { initial: 'M', name: 'Mary Keirstin Marziel Itliong Ante', school: 'BSIT', role: 'Intern · Batch 2026', link: '/Kei_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
-  { initial: 'D', name: 'Derick Myles Mercado', school: 'BSIT', role: 'Intern · Batch 2026', link: '/Derick_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: 'https://scontent.fcrk1-2.fna.fbcdn.net/v/t39.30808-6/499934252_2613479442330977_3090380740370684422_n.jpg?stp=dst-jpg_tt6&cstp=mx1080x1080&ctp=s1080x1080&_nc_cat=110&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeFmbQPNJFnGkpM2tZb4yuOTMF4TlRRfr48wXhOVFF-vj-Ak7_lJ6ItYqkPDbB2dD7R3FzCIkC7b58b7Qzo5sq_C&_nc_ohc=z0-rZjwxiNwQ7kNvwGW3jQx&_nc_oc=AdpJoyMQaBEztkKpN2n7bXZPR_HHy31JQjD5hsugmbCyLHqGp_djbAL3hzw5kflxTlg&_nc_zt=23&_nc_ht=scontent.fcrk1-2.fna&_nc_gid=UICdPpDp3k1eruBVKhewGA&_nc_ss=7b2a8&oh=00_Af_c2wJ1howOc-2zyvAUQAIS8rS4SiuQSSpE-EAQLIrteg&oe=6A40536B' },
-  { initial: 'E', name: 'Ethan Wilvic Bernabe', school: 'BMMA', role: 'Intern · Batch 2026', link: '/Ethan_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
-  { initial: 'J', name: 'Jhon Gabriel Maitas Carlos', school: 'BSIT', role: 'Intern · Batch 2026', link: '/Gab_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
-  { initial: 'M', name: 'Miranda, Christian Joseph', school: 'BCSA', role: 'Intern · Batch 2026', link: '/CJ_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
-  { initial: 'J', name: 'Ja', school: 'BMMA', role: 'Intern · Batch 2026', link: '/Ja_PortfolioV1.html', gradient: 'linear-gradient(135deg,#7A9B6A,#3A4436)', image: '' },
-];
-
 export default function LandingPage({ events = [], totalMembers = 0, partners = [] }: LandingPageProps) {
   const [activeTab, setActiveTab] = useState<'content-creators' | 'creatives'>('content-creators');
   const [smeSearch, setSmeSearch] = useState('');
@@ -348,71 +329,6 @@ export default function LandingPage({ events = [], totalMembers = 0, partners = 
                   Student leaders, interns, and emerging creatives we are proud to host and feature from Baguio's top schools.
                 </p>
               </div>
-
-              <div className="student-leader-banner reveal">
-                <div className="slb-icon">
-                 <a href="https://ibb.co/RpwXDhYf" target="_blank" rel="noopener noreferrer">
-                  <img 
-                    src="https://i.ibb.co/0jb0GBmT/JOSH.jpg" 
-                    alt="JOSH" 
-                    style={{ 
-                      width: '50px', 
-                      height: '50px', 
-                      borderRadius: '50%', 
-                      objectFit: 'cover',
-                      border: 'none',
-                      display: 'block'
-                      }} 
-                    />
-                  </a> 
-                </div>
-                <div>
-                  <div className="slb-label">Student Leader</div>
-                  <div className="slb-name">Josh</div>
-                  <div className="slb-sub">AYA Student Leader · IT Cohort · Operations</div>
-                </div>
-                <a href="/Josh_PortfolioV1.html" target="_blank" rel="noopener noreferrer" className="sme-link" style={{ marginLeft: 'auto' }}>View Profile →</a>
-              </div>
-
-              {/* UCCITCS */}
-              <div className="cohort-header reveal">
-                <div className="cohort-tag" style={{ background: 'rgba(122,155,106,0.15)', color: '#4E5C49', borderColor: 'rgba(122,155,106,0.3)' }}>UC-CITCS</div>
-                <div className="cohort-title">University of the Cordilleras — College of Information Technology and Computer Science</div>
-                <div className="cohort-count">6 Students</div>
-              </div>
-              <div className="student-grid reveal">
-                {STUDENTS_UCCITCS.map((s, i) => (
-                  <div key={i} className="student-card">
-                    {s.image
-                      ? <img src={s.image} alt={s.name} className="student-avatar student-avatar-photo" />
-                      : <div className="student-avatar" style={{ background: s.gradient }}>{s.initial}</div>
-                    }
-                    <div className="student-name">{s.name}</div>
-                    <div className="student-school">{s.school}</div>
-                    <div className="student-role">{s.role}</div>
-                    <a href={s.link} target="_blank" rel="noopener noreferrer" className="student-profile-btn">View Profile</a>
-                  </div>
-                ))}
-              </div>
-
-              {/* UCBFA */}
-              <div className="cohort-header reveal" style={{ marginTop: '2.5rem' }}>
-                <div className="cohort-tag">UC-BFA</div>
-                <div className="cohort-title">University of the Cordilleras — Bachelor of Fine Arts Major in MultiMedia</div>
-                <div className="cohort-count">8 Students</div>
-              </div>
-              <div className="student-grid reveal">
-                {STUDENTS_UCBFA.map((s, i) => (
-                  <div key={i} className="student-card">
-                    <div className="student-avatar" style={{ background: s.gradient }}>{s.initial}</div>
-                    <div className="student-name">{s.name}</div>
-                    <div className="student-school">{s.school}</div>
-                    <div className="student-role">{s.role}</div>
-                    <a href={s.link} className="student-profile-btn">View Profile</a>
-                  </div>
-                ))}
-              </div>
-
 
               <div className="get-featured-strip reveal" style={{ marginTop: '2.5rem' }}>
                 <div>
